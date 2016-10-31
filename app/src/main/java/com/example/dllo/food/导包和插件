@@ -1,0 +1,28 @@
+
+1. RecyclerView 导包,  v7 下的
+
+2. Picasso 导包, square up 出品的
+
+3. 使用 Gson 实现网络请求 需要下插件, 导包
+下插件:
+command + 逗号 -> plugins, 搜索Gson
+导包:
+command + 分号, 搜需 gson -> 2.7
+
+4. 使用TabLayout需要导包
+ design 包
+
+5. Volley 数据请求 需要导包, 4floor 的那个 volley
+
+6. 使用第三方 实现 轮播图 需要 添加依赖 和 权限
+GitHub 学习链接:
+https://github.com/youth5201314/banner
+
+compile 'com.youth.banner:banner:1.4.1'
+compile 'com.github.bumptech.glide:glide:3.7.0'
+
+7. 第三方LiteOrm 创建数据库 需要jar 包,
+Lite 学习网址:  http://litesuits.com/index.html
+
+
+

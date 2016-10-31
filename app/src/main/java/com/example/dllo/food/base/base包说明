@@ -1,0 +1,7 @@
+
+在 base包 里存放是是 基类
+作用: 让其他类继承与它, 可以实现代码的优化
+
+CommonVH 是Adapter中的 ViewHolder,
+可以适用于ListView 的Adapter, 也适用于 RecyclerView 的 Adapter
+

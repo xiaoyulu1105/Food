@@ -1,0 +1,19 @@
+
+GitHub 学习链接:
+https://github.com/youth5201314/banner
+
+需要添加依赖:
+compile 'com.youth.banner:banner:1.4.1'
+compile 'com.github.bumptech.glide:glide:3.7.0'
+
+添加网络权限
+<!-- if you want to load images from the internet -->
+<uses-permission android:name="android.permission.INTERNET" />
+
+<!-- if you want to load images from a file OR from the internet -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+导包:
+picasso (在GlideImageLoader类中不好用)
+glide (google的)

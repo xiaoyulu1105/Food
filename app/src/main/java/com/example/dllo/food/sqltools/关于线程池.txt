@@ -1,0 +1,17 @@
+
+int corePoolSize = Runtime.getRuntime().availableProcessors() + 1;
+int maxPoolSize = corePoolSize * 2 + 1;
+
+ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                corePoolSize, maxPoolSize, 60l,
+                TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+
+* 参数5: BlockingQueue<Runnable> workQueue, 任务队列
+         *        1. LinkedBlockingDeque: 无界任务队列
+         *        2. ArrayBlockingQueue: 有界任务队列
+         *        3. SynchronousQueue : 直接提交队列
+         *        4. PriorityBlockingQueue: 优先级队列
+         *        5. DelayQueue: 延时队列, 让任务在任务队列里等待多长时间再拿出来执行
+         * 参数6: ThreadFactory threadFactory,
+         *       线程池工厂类, 一般自定义的时候都默认
+

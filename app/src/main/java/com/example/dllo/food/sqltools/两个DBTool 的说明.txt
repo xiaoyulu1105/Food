@@ -1,0 +1,16 @@
+
+需要一个依赖, jar 架包
+Lite 学习网址: http://litesuits.com/index.html
+
+使用第三方 LiteOrm 实现数据库的操作
+
+DBTool1 是我封装的 实现泛型 的 数据库和线程工具类(已经在该项目删除)
+需要 依赖 MyApp 类的使用
+
+DBTool 是明达封装的 工具类
+需要依赖 MyApp类, SingletonUtils类 使用
+
+注意 数据库类的定义
+// 手动自增, 每个对象要有一个主键
+    @PrimaryKey(AssignType.AUTO_INCREMENT)
+    private int id;
