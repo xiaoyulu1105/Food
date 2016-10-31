@@ -2,6 +2,7 @@ package com.example.dllo.food.sqltools;
 
 import android.os.Handler;
 
+import com.example.dllo.food.values.DBValues;
 import com.litesuits.orm.LiteOrm;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class DBTool {
     private LiteOrm liteOrm;
     private Handler handler;
 
-    public DBTool(String DBName) {
-        singletonUtils = SingletonUtils.getInstance(DBName);
+    public DBTool() {
+        singletonUtils = SingletonUtils.getInstance(DBValues.DBNAME);
         threadPoolExecutor = singletonUtils.getThreadPoolExecutor();
         liteOrm = singletonUtils.getLiteOrm();
         handler = singletonUtils.getHandler();
@@ -46,7 +47,7 @@ public class DBTool {
 
     // 查询数据库的 泛型 方法
     // 使用接口回调将数据返回到 主线程, 所以返回值不需要有, 也不应该有
-    public<T> void queryAllData(Class<T> tClass, OnQueryListener onQueryListener) {
+    public<T> void queryAllData(Class<T> tClass, OnQueryListener<T> onQueryListener) {
 
         threadPoolExecutor.execute(new QueryRunnable<T>(tClass, onQueryListener));
     }

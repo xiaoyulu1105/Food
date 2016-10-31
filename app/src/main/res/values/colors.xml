@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--Radio选中与为选中的颜色-->
+    <color name="colorIsChecked">#e25557</color>
+    <color name="colorNotChecked">#9e9595</color>
+
 </resources>

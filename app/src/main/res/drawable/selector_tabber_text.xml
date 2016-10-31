@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--颜色设置要将drawable 改写成color-->
+    <item android:state_checked="true" android:color="@color/colorIsChecked"/>
+    <item android:state_checked="false" android:color="@color/colorNotChecked"/>
+
+</selector>
