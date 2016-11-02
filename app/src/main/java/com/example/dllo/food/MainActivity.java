@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.dllo.food.homepage.HomePageFragment;
 import com.example.dllo.food.library.LibraryFragment;
 
 public class MainActivity extends AppCompatActivity {

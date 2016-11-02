@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by XiaoyuLu on 16/11/1.
  *
- * 用于显示食物百科 中 GridView 中的数据
+ * 该 适配器 用于显示食物百科 中 GridView 中的数据
  */
 public class MyLibraryGvAdapter extends BaseAdapter{
 

@@ -18,9 +18,9 @@ import com.example.dllo.food.volley.VolleySingleton;
 import java.util.ArrayList;
 
 /**
- * Created by dllo on 16/10/31.
+ * Created by XiaoyuLu on 16/10/31.
  *
- *
+ * 该Fragment 是 食物百科 选项
  */
 public class LibraryFragment extends BaseFragment implements View.OnClickListener{
 

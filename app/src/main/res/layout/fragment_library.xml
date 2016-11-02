@@ -80,7 +80,7 @@
                         android:text="饮食分析"
                         android:background="@null"
                         />
-                    <include layout="@layout/line_vertical_library"/>
+                    <include layout="@layout/line_vertical"/>
                     <Button
                         android:id="@+id/library_btn_compare"
                         android:layout_width="0dp"
@@ -90,7 +90,7 @@
                         android:text="搜索对比"
                         android:background="@null"
                         />
-                    <include layout="@layout/line_vertical_library"/>
+                    <include layout="@layout/line_vertical"/>
                     <Button
                         android:id="@+id/library_btn_scancompare"
                         android:layout_width="0dp"

@@ -24,21 +24,15 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
-
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
     // LiteOrm: 数据库 封装类, 需要手动在lib 里复制文件
     compile files('libs/lite-orm-1.9.2.jar')
-
     // 适用Volley 进行网络请求
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
-
     // 适用第三方实现轮播图
     compile 'com.youth.banner:banner:1.4.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
-
-
+    compile 'com.android.support:design:23.3.0'
 }

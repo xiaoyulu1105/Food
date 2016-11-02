@@ -1,40 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!--食物百科中, 点击食物查询Button 将跳转到该界面-->
+    <!--每一行的高度都是一样的, 所以就自己设置为50dp-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/library_search_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@mipmap/ic_back_dark_center" />
+
         <EditText
             android:id="@+id/library_search_edt"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:background="@null"
             android:hint="请输入食物名称"
-            android:background="@null"
-            />
+            android:singleLine="true"
+            android:textSize="@dimen/activity_search_text_size" />
+
         <ImageButton
-            android:id="@+id/library_search_btn_delete"
+            android:id="@+id/library_search_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
             android:src="@mipmap/ic_clear"
-            android:background="@null"
-            />
+            android:visibility="invisible" />
+
         <ImageButton
+            android:id="@+id/library_search_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_homepage_search"
-            />
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@mipmap/ic_homepage_search" />
     </LinearLayout>
 
+    <include layout="@layout/line_horizontal" />
 
+    <!--最近搜过 和 大家都在搜放在 ScrollView 中-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--当没有搜索记录时, 最近搜过 项 不存在-->
+            <!--最多能显示10个 最近记录 -->
+            <LinearLayout
+                android:id="@+id/library_search_history_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/line_horizontal" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#f6f6f6"
+                    android:gravity="center_vertical"
+                    android:text="最近搜过"
+                    android:textSize="@dimen/activity_search_text_size" />
+
+                <include layout="@layout/line_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用ListView来实现"
+                    />
+                <ListView
+                    android:id="@+id/library_search_history_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></ListView>
+
+            </LinearLayout>
+
+            <!--大家都在搜-->
+            <!--每一行有 2个 数据项, 每行格式几乎一样, 所有选用 RecyclerView -->
+            <include layout="@layout/line_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="#f6f6f6"
+                android:gravity="center_vertical"
+                android:text="大家都在搜"
+                android:textSize="@dimen/activity_search_text_size" />
+
+            <include layout="@layout/line_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用RecyclerView来实现"
+                />
+            <!--用于显示大家都在搜的内容-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/library_search_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
