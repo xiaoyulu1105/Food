@@ -1,0 +1,29 @@
+
+食物派接口
+食物百科
+http://food.boohee.com/fb/v1/categories/list
+
+营养素排序
+http://food.boohee.com/fb/v1/foods/sort_types
+
+首页点击的详细信息(默认排序)
+kind 和 value 是首页中的数据,()代表这个字段可以不加,sub_value代表是子项,
+http://food.boohee.com/fb/v1/foods?kind=group&value=1(&sub_value=13)&order_by=1&page=1&order_asc=0
+
+
+
+逛吃页面
+首页
+http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=1&per=10
+
+测评
+http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=2&per=10
+
+知识
+http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10
+
+美食
+http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10
+
+搜索(红色部分是 搜索的汉字UTF-8转码的结果)
+http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=%E7%BA%A2%E8%96%AF

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.food.volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -96,8 +97,9 @@ public class CommonVH extends RecyclerView.ViewHolder{
     public CommonVH setImage(int imageViewId, String imgUrl) {
         ImageView imageView = getView(imageViewId);
         // TODO 网络请求图片
-        Picasso.with(MyApp.getContext()).load(imgUrl);
-
+        // Picasso 这种写法不行, 应用时出错
+//        Picasso.with(MyApp.getContext()).load(imgUrl);
+        VolleySingleton.getInstance().getImage(imgUrl, imageView);
         return this;
     }
 

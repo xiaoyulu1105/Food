@@ -5,95 +5,231 @@
     android:layout_height="match_parent">
 
     <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    >
+    <!--ScrollView 里面只能直接放一个布局-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!--三个Button及以上的控件在 RelativeLayout 中-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/img_home_bg"
+            >
+
+            <ImageView
+                android:id="@+id/library_title_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_home_logo"
+                android:layout_margin="15dp"
+                android:layout_centerHorizontal="true"/>
+
+            <!--搜索框上面的文字-->
+            <!--困惑!!-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查询食物信息"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/library_title_iv"
+                android:layout_marginTop="30dp"
+                />
+
+            <!--搜索框-->
+            <Button
+                android:id="@+id/library_btn_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_home_search"
+                android:background="@drawable/shape_library_search"
+                android:hint="请输入食物名称"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                />
+
+            <!--三个Button-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="#f1f7f1"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#FFFFFF"
+                    android:layout_margin="10dp"
+                    >
+                    <Button
+                        android:id="@+id/library_btn_analysis"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/selector_library_analysis"
+                        android:text="饮食分析"
+                        android:background="@null"
+                        />
+                    <include layout="@layout/line_vertical_library"/>
+                    <Button
+                        android:id="@+id/library_btn_compare"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/selector_library_compare"
+                        android:text="搜索对比"
+                        android:background="@null"
+                        />
+                    <include layout="@layout/line_vertical_library"/>
+                    <Button
+                        android:id="@+id/library_btn_scancompare"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/selector_library_scan_compare"
+                        android:text="扫码对比"
+                        android:background="@null"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--以下的是GridView的布局-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="#f1f7f1"
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/img_home_bg"
-                >
 
-                <LinearLayout
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                >
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="#0f0"
-                    android:layout_margin="15dp"
-                    >
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/ic_launcher"
-                        android:text="文字"
-                        />
-                </LinearLayout>
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/ic_home_category_bg"
+                    />
 
+                   <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="食物分类"
+                    android:textSize="16sp"
+                    />
+
+                <GridView
+                    android:id="@+id/library_grid1_sort"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="440dp"
+                    android:layout_centerHorizontal="true"
+                    android:numColumns="3"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    android:scrollbars="none"
+                    >
+                </GridView>
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_margin="10dp"
                 >
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wenzi1"
-                    android:textSize="40sp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/ic_home_category_bg"
                     />
 
-            </LinearLayout>
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="热门品牌"
+                    android:textSize="16sp"
+                    />
+
+                <GridView
+                    android:id="@+id/library_grid2_brand"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_centerHorizontal="true"
+                    android:numColumns="3"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    android:scrollbars="none"
+                    >
+                </GridView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/ic_home_category_bg"
+                    />
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="连锁餐饮"
+                    android:textSize="16sp"
+                    />
+
+                <GridView
+                    android:id="@+id/library_grid3_drink"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:numColumns="3"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    android:scrollbars="none"
+                    >
+                </GridView>
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
+
+</ScrollView>
 
 </LinearLayout>

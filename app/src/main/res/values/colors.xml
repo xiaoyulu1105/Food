@@ -8,4 +8,13 @@
     <color name="colorIsChecked">#e25557</color>
     <color name="colorNotChecked">#9e9595</color>
 
+    <!--分隔线的颜色-->
+    <color name="colorDividedLine">#696868</color>
+
+    <!--食物百科中 接近白色的 背景颜色-->
+    <color name="colorBackgroundLibrary">#f1f7f1</color>
+
+
+
+
 </resources>
