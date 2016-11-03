@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/eat_homepage_rv"
+    <ListView
+        android:id="@+id/eat_knowledge_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         >
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
 </LinearLayout>

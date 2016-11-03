@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+
+    <!--逛吃界面 的 知识 界面的 第二种布局, Item有3张图片-->
+
+    <TextView
+        android:id="@+id/item_knowledge_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textColor="@color/colorBlack"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/item_knowledge_img1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:paddingRight="3dp"
+            />
+        <ImageView
+            android:id="@+id/item_knowledge_img2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:paddingRight="3dp"
+
+            />
+        <ImageView
+            android:id="@+id/item_knowledge_img3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:paddingLeft="3dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+        <TextView
+            android:id="@+id/item_knowledge_source1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="source"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_watch"
+            android:layout_marginRight="5dp"
+            />
+        <TextView
+            android:id="@+id/item_knowledge_tail1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tail"
+            android:layout_marginRight="5dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,21 +1,17 @@
-package com.example.dllo.food.homepage;
-
-import android.support.v4.app.Fragment;
+package com.example.dllo.food.eat;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 
 /**
- * Created by XiaoyuLu on 16/10/31.
+ * Created by XiaoyuLu on 16/11/3.
  *
- * 逛吃 选项
+ * 这是 逛吃选项 中的 美食选项
  */
-public class HomePageFragment extends BaseFragment {
-
-
+public class FoodFragment extends BaseFragment {
     @Override
     protected int getLayout() {
-        return R.layout.fragment_homepage;
+        return R.layout.fragment_food;
     }
 
     @Override

@@ -1,29 +1,29 @@
 package com.example.dllo.food.values;
 
 /**
- * Created by XiaoyuLu on 16/11/1.
+ * Created by dllo on 16/10/27.
  *
- * 该类 用于 存放 接口字符串文件
+ * 王野 用到的 所有接口
  */
-public class UrlValues {
+public class TheValues {
 
-    // 食物百科界面 接口
-    public static final String LIBRARY_URL = "http://food.boohee.com/fb/v1/categories/list";
+    // 首页食物百科接口
+    public static String FOOD_FOOD = "http://food.boohee.com/fb/v1/categories/list";
 
     //逛吃界面--首页接口
-    public static final String EAT_HOMEPAGE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=1&per=10";
+    public static String EAT_HOMEPAGE = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=1&per=10";
     //逛吃--首页--下拉刷新--后半段
-    public static final String EAT_HOMEPAGE_DOWN_AFTER = "&category=1&per=10";
+    public static String EAT_HOMEPAGE_DOWN_AFTER = "&category=1&per=10";
 
     //逛吃界面--测评接口
-    public static final String EAT_EVALUATE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=2&per=10";
+    public static String EAT_TEST = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=2&per=10";
     //逛吃--测试--知识--首页--美食--下拉刷新--前半段
-    public static final String EAT_DOWN_BEFORE = "http://food.boohee.com/fb/v1/feeds/category_feed?page=";
+    public static String EAT_DOWN_BEFORE = "http://food.boohee.com/fb/v1/feeds/category_feed?page=";
     //逛吃--测试--下拉刷新--后半段
-    public static final String EAT_TEST_DOWN_AFTER = "&category=2&per=10";
+    public static String EAT_TEST_DOWN_AFTER = "&category=2&per=10";
 
     //逛吃界面--知识接口
-    public static String EAT_KNOWLEDGE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
+    public static String EAT_KNOWLEDGE = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
     //逛吃--知识--下拉刷新--后半段
     public static String EAT_KNOWLEDGE_DOWN_AFTER ="&category=3&per=10";
     //逛吃界面--美食接口
@@ -40,4 +40,10 @@ public class UrlValues {
     public static String FOOD_DESCRIPTION_DOWN_RESTAURANT_BEFORE = "http://food.boohee.com/fb/v1/foods?kind=restaurant&value=";
     //食物百科--详情--下拉刷新--后半部分(上边三个通用后边的)
     public static String FOOD_DESCRIPTION_DOWN_AFTER = "&order_by=1&page=";
+    /**
+     * 详情界面的内容网址和下拉刷新是一样的
+     */
+
+
+
 }

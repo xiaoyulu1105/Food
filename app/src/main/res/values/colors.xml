@@ -4,12 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--黑色和白色-->
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+
     <!--Radio选中与为选中的颜色-->
     <color name="colorIsChecked">#e25557</color>
     <color name="colorNotChecked">#9e9595</color>
 
     <!--分隔线的颜色-->
-    <color name="colorDividedLine">#696868</color>
+    <color name="colorDividedLine">#9b9898</color>
 
     <!--食物百科中 接近白色的 背景颜色-->
     <color name="colorBackgroundLibrary">#f1f7f1</color>

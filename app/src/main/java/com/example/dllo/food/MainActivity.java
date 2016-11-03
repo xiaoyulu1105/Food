@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.dllo.food.homepage.HomePageFragment;
+import com.example.dllo.food.eat.EatFragment;
 import com.example.dllo.food.library.LibraryFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.main_radio_homepage:
-                transaction.replace(R.id.main_framelayout, new HomePageFragment());
+                transaction.replace(R.id.main_framelayout, new EatFragment());
 
                 break;
             case R.id.main_radio_my:
