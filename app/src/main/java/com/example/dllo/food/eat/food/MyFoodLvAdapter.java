@@ -1,34 +1,31 @@
-package com.example.dllo.food.eat.knowledge;
+package com.example.dllo.food.eat.food;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.KnowledgeBean;
+import com.example.dllo.food.beans.FoodBean;
 
 import java.util.ArrayList;
 
 /**
- * Created by XiaoyuLu on 16/11/3.
+ * Created by XiaoyuLu on 16/11/4.
  *
- * 用于显示 逛吃 中的 知识 的数据, 也适用于 美食选项 数据的显示
+ * 用于显示 逛吃 中的 美食选项 的数据, 也适用于 知识 数据的显示
  * 共有两种布局
  * type = 1: 只有一张图片的格
  * type = 3: 共有三张图片的格式
- *
  */
-public class MyKnowLedgeLvAdapter extends BaseAdapter{
+public class MyFoodLvAdapter extends BaseAdapter{
 
-    ArrayList<KnowledgeBean.FeedsBean> feedsBeanArrayList;
+    private ArrayList<FoodBean.FeedsBean> feedsBeanArrayList;
 
-    public void setFeedsBeanArrayList(ArrayList<KnowledgeBean.FeedsBean> feedsBeanArrayList) {
+    public void setFeedsBeanArrayList(ArrayList<FoodBean.FeedsBean> feedsBeanArrayList) {
         this.feedsBeanArrayList = feedsBeanArrayList;
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getCount() {
@@ -58,6 +55,7 @@ public class MyKnowLedgeLvAdapter extends BaseAdapter{
         return 1;
     }
 
+    /** 需要手动复写的 方法, 获取 type 的 个数, 值一定要比 type 的 值大*/
     @Override
     public int getViewTypeCount() {
         return 2;
@@ -73,7 +71,6 @@ public class MyKnowLedgeLvAdapter extends BaseAdapter{
         ArrayList<String> images = (ArrayList<String>) feedsBeanArrayList.get(position).getImages();
 
         int type = getItemViewType(position);
-        Log.d("MyKnowLedgeLvAdapter", "type:" + type);
         CommonVH commonVH;
 
         switch (type) {

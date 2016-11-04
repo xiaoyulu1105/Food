@@ -29,6 +29,7 @@
         <activity android:name=".library.SearchActivity">
 
         </activity>
+        <activity android:name=".my.SettingActivity"/>
 
 
     </application>

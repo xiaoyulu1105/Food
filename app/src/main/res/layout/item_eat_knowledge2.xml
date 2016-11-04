@@ -9,7 +9,7 @@
     <!--逛吃界面 的 知识 界面的 第二种布局, Item有3张图片-->
 
     <TextView
-        android:id="@+id/item_knowledge_title2"
+        android:id="@+id/item_knowledge_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="title"

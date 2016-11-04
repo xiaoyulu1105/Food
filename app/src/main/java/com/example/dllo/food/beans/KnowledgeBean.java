@@ -1,4 +1,4 @@
-package com.example.dllo.food.eat.knowledge;
+package com.example.dllo.food.beans;
 
 import java.util.List;
 

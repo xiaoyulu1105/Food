@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
+import com.example.dllo.food.beans.KnowledgeBean;
 import com.example.dllo.food.values.UrlValues;
 import com.example.dllo.food.volley.GsonRequest;
 import com.example.dllo.food.volley.VolleySingleton;

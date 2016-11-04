@@ -3,10 +3,12 @@ package com.example.dllo.food.eat;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageButton;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 import com.example.dllo.food.eat.evaluate.EvaluateFragment;
+import com.example.dllo.food.eat.food.FoodFragment;
 import com.example.dllo.food.eat.homepage.HomePageFragment;
 import com.example.dllo.food.eat.knowledge.KnowledgeFragment;
 
@@ -23,6 +25,7 @@ public class EatFragment extends BaseFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ArrayList<Fragment> fragmentArrayList;
+    private ImageButton camera;
 
     @Override
     protected int getLayout() {
@@ -33,6 +36,8 @@ public class EatFragment extends BaseFragment {
     protected void initViews() {
         tabLayout = (TabLayout) getView().findViewById(R.id.eat_tab_layout);
         viewPager = (ViewPager) getView().findViewById(R.id.eat_view_pager);
+
+        camera = bindView(R.id.eat_label_camera);
 
         fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new HomePageFragment());

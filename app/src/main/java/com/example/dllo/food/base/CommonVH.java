@@ -2,6 +2,7 @@ package com.example.dllo.food.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +81,19 @@ public class CommonVH extends RecyclerView.ViewHolder{
     // 设置文字
     public CommonVH setText(int id, String text) {
         TextView textView = getView(id);
+        if(textView == null){
+            Log.d("CommonVH", "kong");
+        }
         textView.setText(text);
+
+        // 因为运行 美食界面报空指针 异常, 所以略加修改一下
+//        TextView textView = getView(id);
+//        if (text.length() <= 0){
+//            Log.d("CommonVH", "铺建的字符串没内容");
+//            textView.setText("空");
+//        } else {
+//            textView.setText(text);
+//        }
 
         return this;
     }

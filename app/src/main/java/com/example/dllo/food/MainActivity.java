@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 
 import com.example.dllo.food.eat.EatFragment;
 import com.example.dllo.food.library.LibraryFragment;
+import com.example.dllo.food.my.MyFragment;
 
 public class MainActivity extends AppCompatActivity {
 
