@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!--显示 营养素排序的 Item, 就一个TextView-->
+    <!-- 显示 点击全部后的 弹窗 -->
     <TextView
-        android:id="@+id/item_pop_nutritional_tv"
+        android:id="@+id/item_pop_all_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
         />
 
 </LinearLayout>

@@ -16,20 +16,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <!--启动 和 主页 -->
+        <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".banner.TestActivity">
+        <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".library.SearchActivity">
+        <activity android:name=".banner.TestActivity" />
 
-        </activity>
-        <activity android:name=".my.SettingActivity"/>
+        <!--食物百科 相关-->
+        <activity android:name=".library.SearchActivity" />
+        <activity android:name=".library.CompareActivity"/>
+        <activity android:name=".library.detail.LibraryMoreActivity"/>
+
+        <!--我的中 设置 和 登录-->
+        <activity android:name=".my.SettingActivity" />
+        <activity android:name=".my.LoginActivity" />
+
 
 
     </application>

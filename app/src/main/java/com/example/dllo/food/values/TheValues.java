@@ -26,10 +26,12 @@ public class TheValues {
     public static String EAT_KNOWLEDGE = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
     //逛吃--知识--下拉刷新--后半段
     public static String EAT_KNOWLEDGE_DOWN_AFTER ="&category=3&per=10";
+
     //逛吃界面--美食接口
     public static String EAT_BEAUTY = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10";
     //逛吃--美食--下拉刷新--后半段
     public static String EAT_BEAUTY_DOWN_AFTER ="&category=4&per=10";
+
     //食物百科--详情--营养素排序pop
     public static String FOOD_DESCRIPTION_LINE = "http://food.boohee.com/fb/v1/foods/sort_types";
     //食物百科--详情--下拉刷新--group--前半部分

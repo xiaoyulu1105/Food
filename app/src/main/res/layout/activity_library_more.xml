@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--点击 食物百科 选项中的 GridView item 后跳转到 该界面-->
+
+    <!--标题栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_label_height"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:id="@+id/library_more_return_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/library_more_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_back_dark_center"
+                android:background="@null"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:id="@+id/library_more_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sortName"
+                android:layout_gravity="center"
+                android:textSize="@dimen/activity_label_text_size"
+                android:textColor="@color/colorBlack"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/library_more_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部"
+            android:drawableRight="@mipmap/ic_food_arrow_ordering"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+    <include layout="@layout/line_horizontal"/>
+
+
+    <!--营养素排行-->
+    <LinearLayout
+        android:id="@+id/library_more_nutritional_element_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/item_height_nutritional_element"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="营养素排行"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height_nutritional_element"
+            android:src="@mipmap/ic_food_arrow_ordering"
+            android:background="@null"
+            />
+    </LinearLayout>
+    <include layout="@layout/line_horizontal"/>
+
+    <!--详细数据 用 ListView 进行显示-->
+    <ListView
+        android:id="@+id/library_more_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </ListView>
 
 </LinearLayout>

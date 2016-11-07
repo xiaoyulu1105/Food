@@ -1,5 +1,7 @@
 
-library包 是存放于 食物百科选项相关的 类
+library包 是存放 食物百科选项相关的 类
+
+detail包 是存放于 GridView 中的相关类
 
 GridView 的学习网站
 http://www.cnblogs.com/tinyphp/p/3855224.html

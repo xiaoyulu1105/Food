@@ -1,14 +1,18 @@
 package com.example.dllo.food.my;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
+import com.example.dllo.food.tools.CircleDrawable;
 
 /**
  * Created by XiaoyuLu on 16/10/31.
@@ -23,6 +27,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     private LinearLayout collectionLl;
     private LinearLayout foodDataLl;
     private LinearLayout orderLl;
+    private ImageView iconIV;
 
     @Override
     protected int getLayout() {
@@ -34,11 +39,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
         settingImgBtn = bindView(R.id.my_setting);
         loginBtn = bindView(R.id.my_login);
+        iconIV = bindView(R.id.my_icon);
 
         photoLl = (LinearLayout) getActivity().findViewById(R.id.my_photo_ll);
         collectionLl = (LinearLayout) getActivity().findViewById(R.id.my_collection_ll);
         foodDataLl = (LinearLayout) getActivity().findViewById(R.id.my_data_ll);
         orderLl = (LinearLayout) getActivity().findViewById(R.id.my_order_ll);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_analyse_default);
+        CircleDrawable drawable = new CircleDrawable(bitmap);
+        iconIV.setImageDrawable(drawable);
 
         setClick(this, settingImgBtn, loginBtn);
         setClick(this, photoLl, collectionLl, foodDataLl, orderLl);
@@ -47,8 +57,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     protected void initData() {
-
-
 
     }
 
@@ -62,6 +70,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
                 break;
             case R.id.my_login:
+                // 点击 登录按钮
+                Intent intent1 = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent1);
 
                 break;
             case R.id.my_photo_ll:

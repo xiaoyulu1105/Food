@@ -12,4 +12,12 @@
     <!--首页中Title的大小-->
     <dimen name="activity_homepage_text_size">18sp</dimen>
 
+    <!--登录 title 的 高度 和 文字大小-->
+    <dimen name="activity_label_height">55dp</dimen>
+    <dimen name="activity_label_text_size">20sp</dimen>
+
+    <!--食物百科, item, 营养素排行的高度-->
+    <dimen name="item_height_nutritional_element">45dp</dimen>
+
+
 </resources>

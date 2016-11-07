@@ -1,5 +1,6 @@
 package com.example.dllo.food.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,10 +16,6 @@ public class LibraryBean {
      */
 
     private int group_count;
-    /**
-     * kind : group
-     * categories : [{"id":1,"name":"主食类","image_url":"http://up.boohee.cn/house/u/food_library/category/1_v1.png","sub_category_count":3,"sub_categories":[{"id":13,"name":"包装谷薯","image_url":null},{"id":11,"name":"天然谷薯","image_url":null},{"id":12,"name":"谷薯制品","image_url":null}],"description":null},{"id":2,"name":"肉蛋类","image_url":"http://up.boohee.cn/house/u/food_library/category/2_v1.png","sub_category_count":3,"sub_categories":[{"id":22,"name":"白肉","image_url":null},{"id":21,"name":"红肉","image_url":null},{"id":23,"name":"蛋类","image_url":null}],"description":null},{"id":3,"name":"大豆及制品","image_url":"http://up.boohee.cn/house/u/food_library/category/3_v1.png","sub_category_count":1,"sub_categories":[{"id":31,"name":"大豆及制品","image_url":null}],"description":null},{"id":4,"name":"蔬菜菌藻类","image_url":"http://up.boohee.cn/house/u/food_library/category/4_v1.png","sub_category_count":2,"sub_categories":[{"id":42,"name":"菌藻","image_url":null},{"id":41,"name":"蔬菜","image_url":null}],"description":null},{"id":5,"name":"水果类","image_url":"http://up.boohee.cn/house/u/food_library/category/5_v1.png","sub_category_count":1,"sub_categories":[{"id":51,"name":"水果","image_url":null}],"description":null},{"id":6,"name":"奶类","image_url":"http://up.boohee.cn/house/u/food_library/category/6_v1.png","sub_category_count":5,"sub_categories":[{"id":65,"name":"其它","image_url":null},{"id":64,"name":"奶粉","image_url":null},{"id":63,"name":"奶酪","image_url":null},{"id":62,"name":"酸奶","image_url":null},{"id":61,"name":"鲜奶","image_url":null}],"description":null},{"id":7,"name":"油脂类","image_url":"http://up.boohee.cn/house/u/food_library/category/7_v1.png","sub_category_count":2,"sub_categories":[{"id":72,"name":"动物油","image_url":null},{"id":71,"name":"植物油","image_url":null}],"description":null},{"id":8,"name":"坚果类","image_url":"http://up.boohee.cn/house/u/food_library/category/8_v1.png","sub_category_count":1,"sub_categories":[{"id":81,"name":"坚果种子","image_url":null}],"description":null},{"id":9,"name":"调味品","image_url":"http://up.boohee.cn/house/u/food_library/category/9_v1.png","sub_category_count":4,"sub_categories":[{"id":94,"name":"糖和蜂蜜","image_url":null},{"id":91,"name":"调味料","image_url":null},{"id":92,"name":"调味酱","image_url":null},{"id":93,"name":"酱菜","image_url":null}],"description":null},{"id":10,"name":"饮料类","image_url":"http://up.boohee.cn/house/u/food_library/category/10_v1.png","sub_category_count":8,"sub_categories":[{"id":108,"name":"乳饮料","image_url":null},{"id":104,"name":"含糖饮料","image_url":null},{"id":107,"name":"固体饮料","image_url":null},{"id":106,"name":"无糖咖啡","image_url":null},{"id":105,"name":"无糖茶饮","image_url":null},{"id":102,"name":"碳酸饮料","image_url":null},{"id":103,"name":"纯果蔬汁饮料","image_url":null},{"id":101,"name":"酒精饮料","image_url":null}],"description":null},{"id":11,"name":"零食，点心及冷饮","image_url":"http://up.boohee.cn/house/u/food_library/category/11_v1.png","sub_category_count":3,"sub_categories":[{"id":113,"name":"冷饮","image_url":null},{"id":112,"name":"点心","image_url":null},{"id":111,"name":"零食","image_url":null}],"description":null},{"id":12,"name":"其它","image_url":"http://up.boohee.cn/house/u/food_library/category/12_v1.png","sub_category_count":2,"sub_categories":[{"id":121,"name":"药食","image_url":null},{"id":122,"name":"营养保健","image_url":null}],"description":null}]
-     */
 
     private List<GroupBean> group;
 
@@ -38,16 +35,14 @@ public class LibraryBean {
         this.group = group;
     }
 
+
+    /**
+     * kind : group
+     * categories : [{"id":1,"name":"主食类","image_url":"http://up.boohee.cn/house/u/food_library/category/1_v1.png","sub_category_count":3,"sub_categories":[{"id":13,"name":"包装谷薯","image_url":null},{"id":11,"name":"天然谷薯","image_url":null},{"id":12,"name":"谷薯制品","image_url":null}],"description":null},{"id":2,"name":"肉蛋类","image_url":"http://up.boohee.cn/house/u/food_library/category/2_v1.png","sub_category_count":3,"sub_categories":[{"id":22,"name":"白肉","image_url":null},{"id":21,"name":"红肉","image_url":null},{"id":23,"name":"蛋类","image_url":null}],"description":null},{"id":3,"name":"大豆及制品","image_url":"http://up.boohee.cn/house/u/food_library/category/3_v1.png","sub_category_count":1,"sub_categories":[{"id":31,"name":"大豆及制品","image_url":null}],"description":null},{"id":4,"name":"蔬菜菌藻类","image_url":"http://up.boohee.cn/house/u/food_library/category/4_v1.png","sub_category_count":2,"sub_categories":[{"id":42,"name":"菌藻","image_url":null},{"id":41,"name":"蔬菜","image_url":null}],"description":null},{"id":5,"name":"水果类","image_url":"http://up.boohee.cn/house/u/food_library/category/5_v1.png","sub_category_count":1,"sub_categories":[{"id":51,"name":"水果","image_url":null}],"description":null},{"id":6,"name":"奶类","image_url":"http://up.boohee.cn/house/u/food_library/category/6_v1.png","sub_category_count":5,"sub_categories":[{"id":65,"name":"其它","image_url":null},{"id":64,"name":"奶粉","image_url":null},{"id":63,"name":"奶酪","image_url":null},{"id":62,"name":"酸奶","image_url":null},{"id":61,"name":"鲜奶","image_url":null}],"description":null},{"id":7,"name":"油脂类","image_url":"http://up.boohee.cn/house/u/food_library/category/7_v1.png","sub_category_count":2,"sub_categories":[{"id":72,"name":"动物油","image_url":null},{"id":71,"name":"植物油","image_url":null}],"description":null},{"id":8,"name":"坚果类","image_url":"http://up.boohee.cn/house/u/food_library/category/8_v1.png","sub_category_count":1,"sub_categories":[{"id":81,"name":"坚果种子","image_url":null}],"description":null},{"id":9,"name":"调味品","image_url":"http://up.boohee.cn/house/u/food_library/category/9_v1.png","sub_category_count":4,"sub_categories":[{"id":94,"name":"糖和蜂蜜","image_url":null},{"id":91,"name":"调味料","image_url":null},{"id":92,"name":"调味酱","image_url":null},{"id":93,"name":"酱菜","image_url":null}],"description":null},{"id":10,"name":"饮料类","image_url":"http://up.boohee.cn/house/u/food_library/category/10_v1.png","sub_category_count":8,"sub_categories":[{"id":108,"name":"乳饮料","image_url":null},{"id":104,"name":"含糖饮料","image_url":null},{"id":107,"name":"固体饮料","image_url":null},{"id":106,"name":"无糖咖啡","image_url":null},{"id":105,"name":"无糖茶饮","image_url":null},{"id":102,"name":"碳酸饮料","image_url":null},{"id":103,"name":"纯果蔬汁饮料","image_url":null},{"id":101,"name":"酒精饮料","image_url":null}],"description":null},{"id":11,"name":"零食，点心及冷饮","image_url":"http://up.boohee.cn/house/u/food_library/category/11_v1.png","sub_category_count":3,"sub_categories":[{"id":113,"name":"冷饮","image_url":null},{"id":112,"name":"点心","image_url":null},{"id":111,"name":"零食","image_url":null}],"description":null},{"id":12,"name":"其它","image_url":"http://up.boohee.cn/house/u/food_library/category/12_v1.png","sub_category_count":2,"sub_categories":[{"id":121,"name":"药食","image_url":null},{"id":122,"name":"营养保健","image_url":null}],"description":null}]
+     */
     public static class GroupBean {
+
         private String kind;
-        /**
-         * id : 1
-         * name : 主食类
-         * image_url : http://up.boohee.cn/house/u/food_library/category/1_v1.png
-         * sub_category_count : 3
-         * sub_categories : [{"id":13,"name":"包装谷薯","image_url":null},{"id":11,"name":"天然谷薯","image_url":null},{"id":12,"name":"谷薯制品","image_url":null}]
-         * description : null
-         */
 
         private List<CategoriesBean> categories;
 
@@ -67,17 +62,21 @@ public class LibraryBean {
             this.categories = categories;
         }
 
-        public static class CategoriesBean {
+
+        /**
+         * id : 1
+         * name : 主食类
+         * image_url : http://up.boohee.cn/house/u/food_library/category/1_v1.png
+         * sub_category_count : 3
+         * sub_categories : [{"id":13,"name":"包装谷薯","image_url":null},{"id":11,"name":"天然谷薯","image_url":null},{"id":12,"name":"谷薯制品","image_url":null}]
+         * description : null
+         */
+        public static class CategoriesBean implements Serializable{
             private int id;
             private String name;
             private String image_url;
             private int sub_category_count;
             private Object description;
-            /**
-             * id : 13
-             * name : 包装谷薯
-             * image_url : null
-             */
 
             private List<SubCategoriesBean> sub_categories;
 
@@ -129,6 +128,11 @@ public class LibraryBean {
                 this.sub_categories = sub_categories;
             }
 
+            /**
+             * id : 13
+             * name : 包装谷薯
+             * image_url : null
+             */
             public static class SubCategoriesBean {
                 private int id;
                 private String name;

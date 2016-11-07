@@ -1,5 +1,5 @@
 
-1. CircleImageView
+一. CircleImageView 类
 自定义组件: 自定义组件的属性
 1. 在values文件夹下创建一个 attrs.xml文件
 2. 增加自定义的属性
@@ -16,5 +16,6 @@
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView);
         isCircle = array.getBoolean(R.styleable.CircleImageView_isCircle, false);
 
-
+二. DividerItemDecoration 类
+用于实现 RecyclerView 的分隔线
 

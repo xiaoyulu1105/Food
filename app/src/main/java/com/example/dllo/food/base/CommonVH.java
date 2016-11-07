@@ -1,6 +1,10 @@
 package com.example.dllo.food.base;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
@@ -10,13 +14,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dllo.food.tools.CircleDrawable;
+import com.example.dllo.food.values.WhatValues;
 import com.example.dllo.food.volley.VolleySingleton;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Xiaoyulu on 16/10/31.
  *
  * 通用的 ViewHolder
+ * 方法功能: 设置文字, 设置图片, 设置圆形图片
  */
 
 public class CommonVH extends RecyclerView.ViewHolder{
@@ -26,6 +39,7 @@ public class CommonVH extends RecyclerView.ViewHolder{
 
     private SparseArray<View> views;
     private View  itemView; // 行布局
+    private Handler handler; // 用于将网络请求的 Bitmap 传到主线程
 
     public CommonVH(View itemView) {
         super(itemView);
@@ -81,19 +95,7 @@ public class CommonVH extends RecyclerView.ViewHolder{
     // 设置文字
     public CommonVH setText(int id, String text) {
         TextView textView = getView(id);
-        if(textView == null){
-            Log.d("CommonVH", "kong");
-        }
         textView.setText(text);
-
-        // 因为运行 美食界面报空指针 异常, 所以略加修改一下
-//        TextView textView = getView(id);
-//        if (text.length() <= 0){
-//            Log.d("CommonVH", "铺建的字符串没内容");
-//            textView.setText("空");
-//        } else {
-//            textView.setText(text);
-//        }
 
         return this;
     }
@@ -109,11 +111,75 @@ public class CommonVH extends RecyclerView.ViewHolder{
     // 这是图片, 图片需要网络请求
     public CommonVH setImage(int imageViewId, String imgUrl) {
         ImageView imageView = getView(imageViewId);
-        // TODO 网络请求图片
         // Picasso 这种写法不行, 应用时出错
 //        Picasso.with(MyApp.getContext()).load(imgUrl);
         VolleySingleton.getInstance().getImage(imgUrl, imageView);
         return this;
+    }
+
+    /** 显示圆形图片 */
+    public CommonVH setCircleImage(final int imageViewId, String imgUrl) {
+        final ImageView imageView = getView(imageViewId);
+        // TODO 网络请求图片
+        // 出现 NetworkOnMainThreadException 异常, 网络请求需要在子线程实现
+
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+
+                if (msg.what == WhatValues.WHAT_HOMEPAGE_ICON) {
+
+                    Bitmap bitmap = (Bitmap) msg.obj;
+
+                    CircleDrawable drawable = new CircleDrawable(bitmap);
+                    imageView.setImageDrawable(drawable);
+                }
+
+                return false;
+            }
+        });
+
+        new Thread(new MyBitmapRunnable(imgUrl)).start();
+
+        return this;
+    }
+
+    /** 进行网络请求, 将获取的 图片的 Bitmap 返回到 主线程*/
+    private class MyBitmapRunnable implements Runnable {
+
+        private String imgUrl;
+
+        public MyBitmapRunnable(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        @Override
+        public void run() {
+            try {
+                URL url = new URL(imgUrl);
+                HttpURLConnection connection =
+                        (HttpURLConnection) url.openConnection();
+                // 网上的连网方法
+//            connection.setDoInput(true);
+//            connection.connect();
+
+                if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) {
+                    InputStream inputStream = connection.getInputStream();
+
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                    Message message = new Message();
+                    message.what = WhatValues.WHAT_HOMEPAGE_ICON;
+                    message.obj = bitmap;
+                    handler.sendMessage(message);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // 设置 View 的点击事件

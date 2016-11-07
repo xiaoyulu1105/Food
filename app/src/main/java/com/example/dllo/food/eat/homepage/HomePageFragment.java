@@ -35,6 +35,15 @@ public class HomePageFragment extends BaseFragment {
     protected void initViews() {
         recyclerView = bindView(R.id.eat_homepage_rv);
 
+    }
+
+    @Override
+    protected void initData() {
+        gsonMethod();
+    }
+
+    /** 在该方法中实现 Gson 的相关操作 */
+    private void gsonMethod() {
         GsonRequest<HomepageBean> gsonRequest = new GsonRequest<HomepageBean>(
                 HomepageBean.class, UrlValues.EAT_HOMEPAGE_URL,
                 new Response.Listener<HomepageBean>() {
@@ -63,11 +72,5 @@ public class HomePageFragment extends BaseFragment {
         });
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
-
-    }
-
-    @Override
-    protected void initData() {
-
     }
 }

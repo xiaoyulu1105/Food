@@ -3,15 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="12"
+    android:weightSum="11"
     >
 
     <!--我的选项 中的 设置 的布局-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/activity_label_height"
         android:orientation="horizontal"
         android:background="@color/colorWhite"
         >
@@ -22,17 +21,38 @@
             android:src="@mipmap/ic_back_dark_center"
             android:background="@null"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置"
             android:textColor="@color/colorBlack"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:layout_gravity="center"
             />
 
     </LinearLayout>
+    <include layout="@layout/line_horizontal"/>
+
+    <!--后4个Item可以放在 ListView 中实现-->
+    <ListView
+        android:id="@+id/my_set_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scrollbars="none"
+        >
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="食物派 版本号: V2.6"
+        android:gravity="center"
+        />
 
 </LinearLayout>

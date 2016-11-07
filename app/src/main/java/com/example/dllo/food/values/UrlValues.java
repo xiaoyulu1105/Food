@@ -23,16 +23,18 @@ public class UrlValues {
     public static final String EAT_TEST_DOWN_AFTER = "&category=2&per=10";
 
     //逛吃界面--知识接口
-    public static String EAT_KNOWLEDGE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
+    public static final String EAT_KNOWLEDGE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=3&per=10";
     //逛吃--知识--下拉刷新--后半段
     public static String EAT_KNOWLEDGE_DOWN_AFTER ="&category=3&per=10";
-    //逛吃界面--美食接口
 
-    public static String EAT_BEAUTY_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10";
+    //逛吃界面--美食接口
+    public static final String EAT_BEAUTY_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=4&per=10";
     //逛吃--美食--下拉刷新--后半段
     public static String EAT_BEAUTY_DOWN_AFTER ="&category=4&per=10";
+
     //食物百科--详情--营养素排序pop
-    public static String FOOD_DESCRIPTION_LINE = "http://food.boohee.com/fb/v1/foods/sort_types";
+    public static final String LIBRARY_NATRITIONALELEMENT_URL = "http://food.boohee.com/fb/v1/foods/sort_types";
+
     //食物百科--详情--下拉刷新--group--前半部分
     public static String FOOD_DESCRIPTION_DOWN_GROUP_BEFORE = "http://food.boohee.com/fb/v1/foods?kind=group&value=";
     //食物百科--详情--下拉刷新--brand--前半部分

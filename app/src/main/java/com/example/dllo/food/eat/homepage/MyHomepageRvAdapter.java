@@ -1,5 +1,7 @@
 package com.example.dllo.food.eat.homepage;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -8,6 +10,11 @@ import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
 import com.example.dllo.food.beans.HomepageBean;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +63,7 @@ public class MyHomepageRvAdapter extends RecyclerView.Adapter{
 
         int type = getItemViewType(position);
         CommonVH commonVH = (CommonVH) holder;
+        Bitmap bitmap = null;
         // 获取 图片, 标题, 头像, 发布者
         // 点赞数在数据类里没找到
         String imgUrl = feedsBeanArrayList.get(position).getCard_image();
@@ -75,13 +83,16 @@ public class MyHomepageRvAdapter extends RecyclerView.Adapter{
                 commonVH.setText(R.id.homepage_item_title, title);
                 commonVH.setText(R.id.homepage_item_description, description);
 
-                commonVH.setImage(R.id.homepage_item_publisher_image, iconUrl);
                 commonVH.setText(R.id.homepage_item_publisher, publisher);
+//                commonVH.setImage(R.id.homepage_item_publisher_image, iconUrl);
+                commonVH.setCircleImage(R.id.homepage_item_publisher_image, iconUrl);
+
+                // 图片需要圆形显示, 已知图片网址
+                // 实现方法: 先用 Http 获得图片的输入流,
+                // 再用 Bitmap工厂对流进行解码, 最后返回Bitmap
 
                 break;
         }
-
-
 
     }
 
