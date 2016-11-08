@@ -71,7 +71,7 @@ public class LibraryBean {
          * sub_categories : [{"id":13,"name":"包装谷薯","image_url":null},{"id":11,"name":"天然谷薯","image_url":null},{"id":12,"name":"谷薯制品","image_url":null}]
          * description : null
          */
-        public static class CategoriesBean implements Serializable{
+        public static class CategoriesBean {
             private int id;
             private String name;
             private String image_url;

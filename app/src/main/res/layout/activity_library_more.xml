@@ -74,6 +74,7 @@
             android:layout_marginRight="5dp"
             />
         <ImageButton
+            android:id="@+id/library_more_nutritional_element_ib"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/item_height_nutritional_element"
             android:src="@mipmap/ic_food_arrow_ordering"

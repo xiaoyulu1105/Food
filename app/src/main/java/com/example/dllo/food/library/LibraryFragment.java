@@ -1,7 +1,6 @@
 package com.example.dllo.food.library;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,12 +13,11 @@ import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 import com.example.dllo.food.beans.LibraryBean;
-import com.example.dllo.food.library.detail.LibraryMoreActivity;
+import com.example.dllo.food.library.more.LibraryMoreActivity;
 import com.example.dllo.food.values.UrlValues;
 import com.example.dllo.food.volley.GsonRequest;
 import com.example.dllo.food.volley.VolleySingleton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -91,7 +89,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     }
 
     /** 用于获取 食物百科 连锁餐饮 数据并进行铺建 */
-    private void getDrinkDataAndShow(LibraryBean response) {
+    private void getDrinkDataAndShow(final LibraryBean response) {
         final ArrayList<LibraryBean.GroupBean.CategoriesBean> beanArrayList2 =
                 (ArrayList<LibraryBean.GroupBean.CategoriesBean>)
                         response.getGroup().get(2).getCategories();
@@ -103,17 +101,18 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
         gridViewDrink.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LibraryBean.GroupBean.CategoriesBean bean = beanArrayList2.get(position);
+
+                LibraryBean.GroupBean groupBean = response.getGroup().get(2);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, bean);
+                putDataInIntent(intent, groupBean, position);
                 startActivity(intent);
             }
         });
     }
 
     /** 用于获取 食物百科 热门品牌 数据并进行铺建 */
-    private void getBrandDataAndShow(LibraryBean response) {
+    private void getBrandDataAndShow(final LibraryBean response) {
         final ArrayList<LibraryBean.GroupBean.CategoriesBean> beanArrayList1 =
                 (ArrayList<LibraryBean.GroupBean.CategoriesBean>)
                         response.getGroup().get(1).getCategories();
@@ -125,12 +124,11 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
         gridViewBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 // 点击进行 页面跳转
-                LibraryBean.GroupBean.CategoriesBean bean = beanArrayList1.get(position);
+                LibraryBean.GroupBean groupBean = response.getGroup().get(1);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, bean);
+                putDataInIntent(intent, groupBean, position);
                 startActivity(intent);
 
             }
@@ -138,7 +136,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     }
 
     /** 用于获取 食物百科 食物分类 数据并进行铺建 */
-    private void getSortDataAndShow(LibraryBean response) {
+    private void getSortDataAndShow(final LibraryBean response) {
         // 访问成功, 第一个 GridView 的内容
         final ArrayList<LibraryBean.GroupBean.CategoriesBean> beanArrayList =
                 (ArrayList<LibraryBean.GroupBean.CategoriesBean>)
@@ -153,10 +151,12 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                LibraryBean.GroupBean.CategoriesBean bean = beanArrayList.get(position);
+                // 将groupBean 的 kind ,
+                // bean中的 name, id, 以及其内部类的 name的集合, id的集合进行传递
+                LibraryBean.GroupBean groupBean = response.getGroup().get(0);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, bean);
+                putDataInIntent(intent, groupBean, position);
                 startActivity(intent);
 
             }
@@ -164,8 +164,11 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    /** CategoriesBean类的数据拆分通过 Intent 传到下一个 Intent */
-    private void putDataInIntent(Intent intent, LibraryBean.GroupBean.CategoriesBean bean) {
+    /** CategoriesBean类的数据拆分后通过 Intent 传到下一个 Intent */
+    private void putDataInIntent(Intent intent, LibraryBean.GroupBean groupBean, int position) {
+
+        String kind = groupBean.getKind();
+        LibraryBean.GroupBean.CategoriesBean bean = groupBean.getCategories().get(position);
 
         // 两个集合, 分别存放 内部类SubCategoriesBean类中的 name 和 id
         ArrayList<String> subNameArrayList = new ArrayList<>();
@@ -182,12 +185,12 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
         String name = bean.getName();
         int id = bean.getId();
 
-        // 将bean中的 name, id, 以及其内部类的 name的集合, id的集合
+        // 将groupBean 的 kind , bean中的 name, id, 以及其内部类的 name的集合, id的集合进行传递
+        intent.putExtra("kind", kind);
         intent.putExtra("name", name);
         intent.putExtra("id", id);
         intent.putExtra("subNameArrayList", subNameArrayList);
         intent.putExtra("subIdArrayList", subIdArrayList);
-
     }
 
     @Override

@@ -33,7 +33,7 @@
         <!--食物百科 相关-->
         <activity android:name=".library.SearchActivity" />
         <activity android:name=".library.CompareActivity"/>
-        <activity android:name=".library.detail.LibraryMoreActivity"/>
+        <activity android:name=".library.more.LibraryMoreActivity"/>
 
         <!--我的中 设置 和 登录-->
         <activity android:name=".my.SettingActivity" />

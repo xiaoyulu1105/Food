@@ -34,6 +34,8 @@ public class UrlValues {
 
     //食物百科--详情--营养素排序pop
     public static final String LIBRARY_NATRITIONALELEMENT_URL = "http://food.boohee.com/fb/v1/foods/sort_types";
+    public static final String LIBRARY_MORE_URL = "http://food.boohee.com/fb/v1/foods?kind=group&value=1&order_by=1&page=1&order_asc=0";
+    public static final String LIBRARY_MORE_DETAIL_URL = "http://food.boohee.com/fb/v1/foods?kind=group&value=1(&sub_value=13)&order_by=1&page=1&order_asc=0";
 
     //食物百科--详情--下拉刷新--group--前半部分
     public static String FOOD_DESCRIPTION_DOWN_GROUP_BEFORE = "http://food.boohee.com/fb/v1/foods?kind=group&value=";

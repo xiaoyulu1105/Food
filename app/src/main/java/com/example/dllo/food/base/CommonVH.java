@@ -39,7 +39,6 @@ public class CommonVH extends RecyclerView.ViewHolder{
 
     private SparseArray<View> views;
     private View  itemView; // 行布局
-    private Handler handler; // 用于将网络请求的 Bitmap 传到主线程
 
     public CommonVH(View itemView) {
         super(itemView);
@@ -66,7 +65,7 @@ public class CommonVH extends RecyclerView.ViewHolder{
         return (T) view;
     }
 
-    // 专门给 ListView 使用的方法
+    /** 专门给 ListView 使用的方法 */
     public static CommonVH getViewHolder(View itemView, ViewGroup parent, int layoutItemId) {
         CommonVH commonVH;
         if (itemView == null) {
@@ -80,12 +79,12 @@ public class CommonVH extends RecyclerView.ViewHolder{
         return commonVH;
     }
 
-    // 方法重载, 专门给 RecyclerView 的Adapter 使用的方法
+    /** 构造方法的重载, 专门给 RecyclerView 的Adapter 使用的方法 */
     public static CommonVH getViewHolder(ViewGroup parent, int layoutItemId) {
         return getViewHolder(null, parent, layoutItemId);
     }
 
-    // 返回(获取)行布局
+    /** 返回(获取)行布局 */
     public View getItemView() {
         return itemView;
     }
@@ -100,7 +99,7 @@ public class CommonVH extends RecyclerView.ViewHolder{
         return this;
     }
 
-    // 设置图片, 图片是 mipmap里的
+    /** 设置图片, 图片是 mipmap里的 */
     public CommonVH setImage(int imageViewId, int imgId) {
         ImageView imageView = getView(imageViewId);
         imageView.setImageResource(imgId);
@@ -108,7 +107,7 @@ public class CommonVH extends RecyclerView.ViewHolder{
         return this;
     }
 
-    // 这是图片, 图片需要网络请求
+    /** 设置图片, 图片需要网络请求 */
     public CommonVH setImage(int imageViewId, String imgUrl) {
         ImageView imageView = getView(imageViewId);
         // Picasso 这种写法不行, 应用时出错
@@ -119,77 +118,21 @@ public class CommonVH extends RecyclerView.ViewHolder{
 
     /** 显示圆形图片 */
     public CommonVH setCircleImage(final int imageViewId, String imgUrl) {
-        final ImageView imageView = getView(imageViewId);
-        // TODO 网络请求图片
-        // 出现 NetworkOnMainThreadException 异常, 网络请求需要在子线程实现
 
-        handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-
-                if (msg.what == WhatValues.WHAT_HOMEPAGE_ICON) {
-
-                    Bitmap bitmap = (Bitmap) msg.obj;
-
-                    CircleDrawable drawable = new CircleDrawable(bitmap);
-                    imageView.setImageDrawable(drawable);
-                }
-
-                return false;
-            }
-        });
-
-        new Thread(new MyBitmapRunnable(imgUrl)).start();
+        ImageView imageView = getView(imageViewId);
+        VolleySingleton.getInstance().getCircleImage(imgUrl,imageView);
 
         return this;
     }
 
-    /** 进行网络请求, 将获取的 图片的 Bitmap 返回到 主线程*/
-    private class MyBitmapRunnable implements Runnable {
-
-        private String imgUrl;
-
-        public MyBitmapRunnable(String imgUrl) {
-            this.imgUrl = imgUrl;
-        }
-
-        @Override
-        public void run() {
-            try {
-                URL url = new URL(imgUrl);
-                HttpURLConnection connection =
-                        (HttpURLConnection) url.openConnection();
-                // 网上的连网方法
-//            connection.setDoInput(true);
-//            connection.connect();
-
-                if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) {
-                    InputStream inputStream = connection.getInputStream();
-
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                    Message message = new Message();
-                    message.what = WhatValues.WHAT_HOMEPAGE_ICON;
-                    message.obj = bitmap;
-                    handler.sendMessage(message);
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // 设置 View 的点击事件
+    /** 设置 View 的点击事件 */
     public CommonVH setViewClick(int id, View.OnClickListener onClickListener) {
         getView(id).setOnClickListener(onClickListener);
 
         return this;
     }
 
-    // 为行布局设置点击事件
+    /** 为行布局设置点击事件 */
     public CommonVH setItemClick (View.OnClickListener onClickListener) {
         itemView.setOnClickListener(onClickListener);
 
