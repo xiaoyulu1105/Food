@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.FoodBean;
+import com.example.dllo.food.beans.DeliciousFoodBean;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
  */
 public class MyFoodLvAdapter extends BaseAdapter{
 
-    private ArrayList<FoodBean.FeedsBean> feedsBeanArrayList;
+    private ArrayList<DeliciousFoodBean.FeedsBean> feedsBeanArrayList;
 
-    public void setFeedsBeanArrayList(ArrayList<FoodBean.FeedsBean> feedsBeanArrayList) {
+    public void setFeedsBeanArrayList(ArrayList<DeliciousFoodBean.FeedsBean> feedsBeanArrayList) {
         this.feedsBeanArrayList = feedsBeanArrayList;
         notifyDataSetChanged();
     }

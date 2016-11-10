@@ -139,4 +139,11 @@ public class CommonVH extends RecyclerView.ViewHolder{
         return this;
     }
 
+    /** 设置View 的文本颜色*/
+    public CommonVH setTextColor(int id, int color) {
+        TextView textView = getView(id);
+        textView.setTextColor(color);
+
+        return this;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by XiaoyuLu on 16/11/3.
  *
- * 这是 逛吃选项中的 测评选项的 数据类
+ * 这是 逛吃选项中的 第二项: 测评 的 数据类
  */
 public class EvaluateBean {
 

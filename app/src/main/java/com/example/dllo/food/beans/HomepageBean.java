@@ -51,14 +51,14 @@ public class HomepageBean {
 
     /**
      * item_id : 7593
-     * title : 休息日早餐
+     * title : 休息日早餐  // 有
      * card_image : http://one.boohee.cn/food/2016/10/24/9E6BF442-E85F-45BE-979A-EECF4FB3E51B.jpg?imageView2/2/w/640
-     * publisher : 言言言言西早
+     * publisher : 言言言言西早  // 有
      * publisher_avatar : http://wx.qlogo.cn/mmopen/6KA0QCGAlFyyuUrfHc706G1E3WEqzPELYfib14IBq2PibW8UFGiaGFAdNAAwSKBhRd1MBnficMD4KvYsNsGTRZuy9W0Ss0PDnxQ8/0
      * description :
      * content_type : 5
      * type : food_card
-     * like_ct : 91
+     * like_ct : 91   // 有
      */
     public static class FeedsBean {
         private int item_id;
@@ -70,6 +70,17 @@ public class HomepageBean {
         private int content_type;
         private String Link;
         private String type;
+
+        // 自己添加的变量, 并创建其 Get Set 方法
+        private int like_ct;
+
+        public int getLike_ct() {
+            return like_ct;
+        }
+
+        public void setLike_ct(int like_ct) {
+            this.like_ct = like_ct;
+        }
 
         public int getItem_id() {
             return item_id;

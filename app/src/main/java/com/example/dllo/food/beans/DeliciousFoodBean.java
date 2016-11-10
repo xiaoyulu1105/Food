@@ -7,7 +7,7 @@ import java.util.List;
  *
  * 逛吃选型 的 美食选型的 数据类
  */
-public class FoodBean {
+public class DeliciousFoodBean {
 
     /**
      * page : 1

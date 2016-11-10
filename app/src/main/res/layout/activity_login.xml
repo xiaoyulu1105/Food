@@ -28,7 +28,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18sp" />
     </LinearLayout>
-
     <include layout="@layout/line_horizontal" />
 
     <TextView

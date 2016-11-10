@@ -52,7 +52,7 @@ public class FoodMoreBean {
      * name : 米饭
      * thumb_image_url : http://s.boohee.cn/house/food_mid/mid_photo_201512613144756.jpg
      * is_liquid : false
-     * health_light : 1
+     * health_light : 1 // 1,2,3: 绿色,黄色,红色
      * weight : 100
      * calory : 116
      * fat : 0.3

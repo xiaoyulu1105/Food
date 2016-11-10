@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
 import com.example.dllo.food.beans.HomepageBean;
+import com.example.dllo.food.tools.OnRecyclerViewItemClickListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +28,12 @@ import java.util.ArrayList;
 public class MyHomepageRvAdapter extends RecyclerView.Adapter{
 
     private ArrayList<HomepageBean.FeedsBean> feedsBeanArrayList;
+    private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
+
+    public void setOnRecyclerViewItemClickListener(
+            OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
+        this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+    }
 
     public void setFeedsBeanArrayList(ArrayList<HomepageBean.FeedsBean> feedsBeanArrayList) {
         this.feedsBeanArrayList = feedsBeanArrayList;
@@ -32,38 +41,35 @@ public class MyHomepageRvAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+        String title = feedsBeanArrayList.get(position).getTitle();
+        if (title == null) {
+            // type 为 0: 表示第一张图片
+            // type 为 1: 表示正常的图片和文字结合
+            return 0;
+        }
+        return 1;
+    }
 
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CommonVH commonVH;
         switch (viewType) {
-            case 1:
-                 commonVH = CommonVH.getViewHolder(parent, R.layout.item_eat_homepage1);
+            case 0:
+                commonVH = CommonVH.getViewHolder(parent, R.layout.item_eat_homepage1);
                 break;
             default:
-                 commonVH = CommonVH.getViewHolder(parent, R.layout.item_eat_homepage2);
+                commonVH = CommonVH.getViewHolder(parent, R.layout.item_eat_homepage2);
         }
-
         return commonVH;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        String title = feedsBeanArrayList.get(position).getTitle();
-        if (title == null) {
-            // type 为 1: 表示第一张图片
-            // type 为 2: 表示正常的图片和文字结合
-            return 1;
-        }
-
-        return 2;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         int type = getItemViewType(position);
         CommonVH commonVH = (CommonVH) holder;
-        Bitmap bitmap = null;
+
         // 获取 图片, 标题, 头像, 发布者
         // 点赞数在数据类里没找到
         String imgUrl = feedsBeanArrayList.get(position).getCard_image();
@@ -72,11 +78,13 @@ public class MyHomepageRvAdapter extends RecyclerView.Adapter{
 
         String iconUrl = feedsBeanArrayList.get(position).getPublisher_avatar();
         String publisher = feedsBeanArrayList.get(position).getPublisher();
+        int likeCt = feedsBeanArrayList.get(position).getLike_ct();
+        String likeCtString = String.valueOf(likeCt);
 
         switch (type) {
-            case 1:
+            case 0:
                 commonVH.setImage(R.id.homepage_item_card_image1, imgUrl);
-
+                
                 break;
             default:
                 commonVH.setImage(R.id.homepage_item_card_image, imgUrl);
@@ -84,15 +92,18 @@ public class MyHomepageRvAdapter extends RecyclerView.Adapter{
                 commonVH.setText(R.id.homepage_item_description, description);
 
                 commonVH.setText(R.id.homepage_item_publisher, publisher);
-//                commonVH.setImage(R.id.homepage_item_publisher_image, iconUrl);
                 commonVH.setCircleImage(R.id.homepage_item_publisher_image, iconUrl);
 
-                // 图片需要圆形显示, 已知图片网址
-                // 实现方法: 先用 Http 获得图片的输入流,
-                // 再用 Bitmap工厂对流进行解码, 最后返回Bitmap
-
+                commonVH.setText(R.id.homepage_item_like_ct, likeCtString);
                 break;
         }
+        
+        commonVH.getItemView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecyclerViewItemClickListener.onItemClick(position);
+            }
+        });
 
     }
 

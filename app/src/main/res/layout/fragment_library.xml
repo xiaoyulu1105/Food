@@ -2,7 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+    <!--android:descendantFocusability="blocksDescendants"的作用:
+     让显示时保证从最上面的布局开始显示-->
 
     <ScrollView
     android:layout_width="match_parent"
