@@ -1,0 +1,11 @@
+
+首页点击的详细信息(默认排序)
+kind 和 value 是首页中的数据,()代表这个字段可以不加,sub_value代表是子项,
+http://food.boohee.com/fb/v1/foods?kind=group&value=1(&sub_value=13)&order_by=1&page=1&order_asc=0
+
+kind = 分类 品牌 餐饮
+value = 点击的 gridView 的 position
+order_by = 营养素排序的 index(1代表无序, 2代表热量, 依次向下)
+order_ac = 0 (高到低)   1(低到高)
+sub_values = 13(包装谷薯) 12(谷薯制品)11(天然谷薯) 右上角分类
+
