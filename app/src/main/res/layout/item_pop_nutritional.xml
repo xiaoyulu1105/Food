@@ -5,12 +5,15 @@
     android:layout_height="wrap_content">
 
     <!--显示 营养素排序的 Item, 就一个TextView-->
+    <!--也用于显示大家都在搜的 Item-->
     <TextView
         android:id="@+id/item_pop_nutritional_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
         />
 
 </LinearLayout>

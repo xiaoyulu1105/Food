@@ -1,11 +1,13 @@
 package com.example.dllo.food.eat.homepage;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
@@ -20,6 +22,7 @@ public class HomePageMoreFirstActivity extends BaseActivity implements View.OnCl
 
     private ImageView returnIV;
     private WebView webView;
+    private String getLink; // 上级界面传递过来的 link
 
     @Override
     protected int getLayout() {
@@ -36,10 +39,14 @@ public class HomePageMoreFirstActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void initData() {
-        String url = UrlValues.EAT_HOMEPAGE_FIRST_LINK;
+
+        Intent intent = getIntent();
+        // getLink 获取为空
+        getLink = intent.getStringExtra("link");
+        getLink = UrlValues.EAT_HOMEPAGE_FIRST_LINK;
 
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl(url);
+        webView.loadUrl(getLink);
         WebSettings webSettings = webView.getSettings();
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setJavaScriptEnabled(true);

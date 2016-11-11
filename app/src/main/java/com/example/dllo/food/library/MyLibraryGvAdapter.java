@@ -1,14 +1,12 @@
 package com.example.dllo.food.library;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.LibraryBean;
-import com.squareup.picasso.Picasso;
+import com.example.dllo.food.beans.library.LibraryBean;
 
 import java.util.ArrayList;
 

@@ -9,12 +9,18 @@ public class UrlValues {
 
     // 食物百科界面 接口
     public static final String LIBRARY_URL = "http://food.boohee.com/fb/v1/categories/list";
+    // 搜索中的大家都在搜接口
+    public static final String LIBRARY_SEARCH_EVERYONE_URL = "http://food.boohee.com/fb/v1/keywords?" +
+            "app_device=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb-e196d7b2848f&" +
+            "token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2%20HTTP/1.1";
+
 
     //逛吃界面--首页接口
     public static final String EAT_HOMEPAGE_URL = "http://food.boohee.com/fb/v1/feeds/category_feed?page=1&category=1&per=10";
     //逛吃--首页--下拉刷新--后半段
     public static final String EAT_HOMEPAGE_DOWN_AFTER = "&category=1&per=10";
     // 逛吃界面--首页-点击第一张图片后跳转的 网址
+    // TODO 逛吃首页的第一张图片跳转的网址应该是传递过去的, 不应该是固定的, 可是没有数据, 还是选择了固定网址
     public static final String EAT_HOMEPAGE_FIRST_LINK = "http://one.boohee.com/store/pages/sleep_app_lite";
 
     //逛吃界面--测评接口
@@ -35,7 +41,7 @@ public class UrlValues {
     public static String EAT_BEAUTY_DOWN_AFTER ="&category=4&per=10";
 
     //食物百科--详情--营养素排序pop
-    public static final String LIBRARY_NATRITIONALELEMENT_URL = "http://food.boohee.com/fb/v1/foods/sort_types";
+    public static final String LIBRARY_NUTRITION_URL = "http://food.boohee.com/fb/v1/foods/sort_types";
     public static final String LIBRARY_MORE_URL = "http://food.boohee.com/fb/v1/foods?kind=group&value=1&order_by=1&page=1&order_asc=0";
     public static final String LIBRARY_MORE_DETAIL_URL = "http://food.boohee.com/fb/v1/foods?kind=group&value=1(&sub_value=13)&order_by=1&page=1&order_asc=0";
 

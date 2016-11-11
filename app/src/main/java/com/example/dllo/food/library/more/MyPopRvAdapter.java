@@ -4,11 +4,10 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.NutritionalElementBean;
+import com.example.dllo.food.beans.library.NutritionalElementBean;
 import com.example.dllo.food.tools.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;

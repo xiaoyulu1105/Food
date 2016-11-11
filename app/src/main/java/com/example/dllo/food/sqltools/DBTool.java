@@ -21,7 +21,7 @@ public class DBTool {
     private Handler handler;
 
     public DBTool() {
-        singletonUtils = SingletonUtils.getInstance(DBValues.DBNAME);
+        singletonUtils = SingletonUtils.getInstance(DBValues.DB_NAME);
         threadPoolExecutor = singletonUtils.getThreadPoolExecutor();
         liteOrm = singletonUtils.getLiteOrm();
         handler = singletonUtils.getHandler();

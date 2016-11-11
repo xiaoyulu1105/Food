@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.FoodMoreBean;
+import com.example.dllo.food.beans.library.FoodMoreBean;
 
 import java.util.ArrayList;
 

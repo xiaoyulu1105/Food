@@ -23,9 +23,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
-import com.example.dllo.food.beans.FoodMoreBean;
-import com.example.dllo.food.beans.LibraryBean;
-import com.example.dllo.food.beans.NutritionalElementBean;
+import com.example.dllo.food.beans.library.FoodMoreBean;
+import com.example.dllo.food.beans.library.LibraryBean;
+import com.example.dllo.food.beans.library.NutritionalElementBean;
 import com.example.dllo.food.tools.DividerItemDecoration;
 import com.example.dllo.food.tools.OnRecyclerViewItemClickListener;
 import com.example.dllo.food.values.UrlValues;
@@ -82,9 +82,9 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
     public static final String ORDER_DEC_TEXT = "由高到低";  // 降序
     public static final int ORDER_ASC_IMAGE = R.mipmap.ic_food_ordering_up; // 上升箭头, 低到高
     public static final int ORDER_DEC_IMAGE = R.mipmap.ic_food_ordering_down; // 下降箭头, 高到低
-    public static final int ORDER_ASC_INT = 1;
-    public static final int ORDER_DEC_INT = 0;
-    private String url;  // 进行
+    public static final int ORDER_ASC_INT = 1; // 低到高
+    public static final int ORDER_DEC_INT = 0; // 高到低
+    private String url;  // 进行数据请求的链接
 
     @Override
     protected int getLayout() {
@@ -284,6 +284,8 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
 
                 orderBtn.setVisibility(View.VISIBLE);
                 orderIV.setVisibility(View.VISIBLE);
+                nutritionalTV.setText(beanArrayList.get(position).getName());
+
                 // order_by = 营养素排序的 index(1代表无序, 2代表热量, 依次向下)
                 orderIndex = beanArrayList.get(position).getIndex();
 
@@ -338,7 +340,7 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
      */
     private void nutritionalGsonMethod() {
         GsonRequest<NutritionalElementBean> gsonRequest = new GsonRequest<>(
-                NutritionalElementBean.class, UrlValues.LIBRARY_NATRITIONALELEMENT_URL,
+                NutritionalElementBean.class, UrlValues.LIBRARY_NUTRITION_URL,
                 new Response.Listener<NutritionalElementBean>() {
                     @Override
                     public void onResponse(NutritionalElementBean response) {

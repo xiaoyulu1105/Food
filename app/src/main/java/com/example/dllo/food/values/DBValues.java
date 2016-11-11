@@ -7,5 +7,5 @@ package com.example.dllo.food.values;
  */
 public class DBValues {
 
-    public static final String DBNAME = "Food.db";
+    public static final String DB_NAME = "Food.db";
 }

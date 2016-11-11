@@ -1,4 +1,4 @@
-package com.example.dllo.food.beans;
+package com.example.dllo.food.beans.library;
 
 import java.io.Serializable;
 import java.util.List;

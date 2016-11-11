@@ -75,30 +75,8 @@ public class HomePageFragment extends BaseFragment {
                         adapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
-                                if (position == 0) {
-                                    // 当点击的是第一个广告图时, 直接跳转到对应的网页
-                                    Intent intent = new Intent(getActivity(), HomePageMoreFirstActivity.class);
-                                    startActivity(intent);
 
-                                } else {
-                                    String iconUrl = feedsBeanArrayList.get(position).getPublisher_avatar();
-                                    String publisher = feedsBeanArrayList.get(position).getPublisher();
-                                    String imageUrl = feedsBeanArrayList.get(position).getCard_image();
-                                    String title = feedsBeanArrayList.get(position).getTitle();
-                                    int likeCt = feedsBeanArrayList.get(position).getLike_ct();
-
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("iconUrl", iconUrl);
-                                    bundle.putString("publisher", publisher);
-                                    bundle.putString("imageUrl", imageUrl);
-                                    bundle.putString("title", title);
-                                    bundle.putInt("likeCt", likeCt);
-
-                                    Intent intent = new Intent(getActivity(), HomePageMoreActivity.class);
-                                    intent.putExtra("bundle", bundle);
-                                    startActivity(intent);
-                                }
-
+                                setIntentDataAndStart(position, feedsBeanArrayList);
                             }
                         });
                     }
@@ -110,5 +88,32 @@ public class HomePageFragment extends BaseFragment {
             }
         });
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    /** 为 Intent 添加 数据 并进行跳转*/
+    private void setIntentDataAndStart(int position, ArrayList<HomepageBean.FeedsBean> feedsBeanArrayList) {
+        if (position == 0) {
+            // 当点击的是第一个广告图时, 直接跳转到对应的网页
+            Intent intent = new Intent(getActivity(), HomePageMoreFirstActivity.class);
+            String link = feedsBeanArrayList.get(position).getLink();
+            intent.putExtra("link", link);
+            startActivity(intent);
+
+        } else {
+            String iconUrl = feedsBeanArrayList.get(position).getPublisher_avatar();
+            String publisher = feedsBeanArrayList.get(position).getPublisher();
+            String imageUrl = feedsBeanArrayList.get(position).getCard_image();
+            int likeCt = feedsBeanArrayList.get(position).getLike_ct();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("iconUrl", iconUrl);
+            bundle.putString("publisher", publisher);
+            bundle.putString("imageUrl", imageUrl);
+            bundle.putInt("likeCt", likeCt);
+
+            Intent intent = new Intent(getActivity(), HomePageMoreActivity.class);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
     }
 }

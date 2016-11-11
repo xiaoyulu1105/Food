@@ -19,19 +19,22 @@
 
         <!--启动 和 主页 -->
         <activity android:name=".StartActivity">
+
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
         <activity android:name=".banner.TestActivity" />
 
         <!--食物百科 相关-->
-        <activity android:name=".library.SearchActivity" />
+        <activity android:name=".library.search.SearchActivity">
+
+        </activity>
+
         <activity android:name=".library.CompareActivity"/>
         <activity android:name=".library.more.LibraryMoreActivity"/>
 

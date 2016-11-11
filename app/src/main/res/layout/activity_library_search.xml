@@ -33,99 +33,31 @@
             android:singleLine="true"
             android:textSize="@dimen/activity_search_text_size" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/library_search_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@null"
             android:src="@mipmap/ic_clear"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:clickable="true"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/library_search_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@null"
-            android:src="@mipmap/ic_homepage_search" />
+            android:src="@mipmap/ic_homepage_search"
+            android:clickable="true"/>
     </LinearLayout>
-
     <include layout="@layout/line_horizontal" />
 
-    <!--最近搜过 和 大家都在搜放在 ScrollView 中-->
-    <ScrollView
+    <!--TODO -->
+    <FrameLayout
+        android:id="@+id/library_search_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!--当没有搜索记录时, 最近搜过 项 不存在-->
-            <!--最多能显示10个 最近记录 -->
-            <LinearLayout
-                android:id="@+id/library_search_history_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include layout="@layout/line_horizontal" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="#f6f6f6"
-                    android:gravity="center_vertical"
-                    android:text="最近搜过"
-                    android:textSize="@dimen/activity_search_text_size" />
-
-                <include layout="@layout/line_horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="用ListView来实现"
-                    />
-                <ListView
-                    android:id="@+id/library_search_history_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></ListView>
-
-            </LinearLayout>
-
-            <!--大家都在搜-->
-            <!--每一行有 2个 数据项, 每行格式几乎一样, 所有选用 RecyclerView -->
-            <include layout="@layout/line_horizontal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:background="#f6f6f6"
-                android:gravity="center_vertical"
-                android:text="大家都在搜"
-                android:textSize="@dimen/activity_search_text_size" />
-
-            <include layout="@layout/line_horizontal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="用RecyclerView来实现"
-                />
-            <!--用于显示大家都在搜的内容-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/library_search_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
 
 </LinearLayout>
