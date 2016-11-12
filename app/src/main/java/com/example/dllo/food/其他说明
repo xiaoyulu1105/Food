@@ -17,3 +17,6 @@ java文件的命名方式:
 文件中变量的命名方式:
 如: mainFrameLayout
 
+EventBus 的数据只能传给显示出来的Activity 或者 Fragment, 其他的接收不到
+
+

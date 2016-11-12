@@ -1,10 +1,14 @@
 package com.example.dllo.food.library.search;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,8 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
-import com.example.dllo.food.beans.TextEvent;
+import com.example.dllo.food.beans.event.SearchTypeEvent;
+import com.example.dllo.food.beans.event.TextEvent;
 import com.example.dllo.food.beans.library.EveryoneSearchBean;
+import com.example.dllo.food.library.LibraryFragment;
+import com.example.dllo.food.sqltools.DBTool;
+import com.example.dllo.food.sqltools.HistorySqlData;
 import com.example.dllo.food.tools.DividerItemDecoration;
 import com.example.dllo.food.tools.OnRecyclerViewItemClickListener;
 import com.example.dllo.food.values.UrlValues;
@@ -31,17 +39,20 @@ import java.util.ArrayList;
 
 /**
  * Created by XiaoyuLu on 16/11/11.
- *
+ * <p/>
  * 跳转到搜索Activity时 进行搜索的 第一个Fragment
  */
-public class SearchSearchFragment extends BaseFragment implements View.OnClickListener{
+public class SearchSearchFragment extends BaseFragment implements View.OnClickListener {
 
     private LinearLayout historyLl;  // 最近搜过的线性布局
     private ListView historyListView; // 最近搜过的数据显示
     private Button deleteHistoryBtn; // 删除历史记录
     private RecyclerView recyclerView; // 大家都在 的数据
 
-    private ArrayList<String> historyArrayList; // 搜索历史的数据集合
+    private ArrayList<HistorySqlData> historyArrayList; // 搜索历史的数据集合
+    private DBTool dbTool; // 用于对数据库的操作
+
+    private String getSearchTypeStr; // 获取 EventBus 传递的搜索的类型的字符串
 
     @Override
     protected int getLayout() {
@@ -56,9 +67,12 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
         recyclerView = bindView(R.id.library_search_search_recycler);
 
         setClick(this, deleteHistoryBtn);
+        historyItemClickMethod();
 
+        historyArrayList = new ArrayList<>();
+        dbTool = new DBTool();
 
-        // 注册 EventBus 订阅者
+        // 注册EventBus
         EventBus.getDefault().register(this);
     }
 
@@ -66,59 +80,108 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
     protected void initData() {
 
         everyoneSearchGson();
-        historyArrayList = new ArrayList<>();
+        judgeIfHistoryNull();
 
-        if (historyArrayList.size() <= 0) {
-            historyLl.setVisibility(View.GONE);
-        } else {
-
-            historyLl.setVisibility(View.VISIBLE);
-
-            String[] array = new String[historyArrayList.size()];
-            historyArrayList.toArray(array);
-
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
-                    R.layout.item_library_search_history,
-                    R.id.item_library_search_history_tv, array);
-            historyListView.setAdapter(arrayAdapter);
-        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        // 取消 EventBus 的注册
         EventBus.getDefault().unregister(this);
     }
 
-    /** 第二步, 注册订阅者, 实现 订阅者的方法 */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public TextEvent getTextEvent(TextEvent textEvent) {
-        String getText = textEvent.getText();
-        historyArrayList.add(0, getText);
-
-        historyLl.setVisibility(View.VISIBLE);
-
-        String[] array = new String[historyArrayList.size()];
-        historyArrayList.toArray(array);
-
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
-                R.layout.item_library_search_history,
-                R.id.item_library_search_history_tv, array);
-        historyListView.setAdapter(arrayAdapter);
-
-        return textEvent;
+    /** 实现 EventBus 订阅者 */
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public SearchTypeEvent getSearchTypeEvent(SearchTypeEvent event) {
+        getSearchTypeStr = event.getSearchType();
+        return event;
     }
 
-    /** 通过Gson 请求 大家都在搜 的数据 */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.library_search_history_delete:
+
+                historyArrayList.clear();
+                judgeIfHistoryNull();
+
+                break;
+            default:
+                Log.d("SearchSearchFragment", "点击出错啦!");
+                break;
+        }
+    }
+
+    /**
+     * 判断历史记录是否为空, 为空则 不显示
+     */
+    public void judgeIfHistoryNull() {
+        dbTool.queryAllData(HistorySqlData.class, new DBTool.OnQueryListener<HistorySqlData>() {
+            @Override
+            public void onQuery(ArrayList<HistorySqlData> t) {
+                historyArrayList = t;
+
+                if (historyArrayList.size() <= 0) {
+                    historyLl.setVisibility(View.GONE);
+                } else {
+
+                    showHistoryData(historyArrayList);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 当历史记录不为空时, 显示记录
+     */
+    private void showHistoryData(ArrayList<HistorySqlData> historyArrayList) {
+        historyLl.setVisibility(View.VISIBLE);
+        // 将数据类集合中的字符串集合获取, 并转换成数组类型
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        for (int i = 0; i < historyArrayList.size(); i++) {
+            String string = historyArrayList.get(i).getHistoryStr();
+            stringArrayList.add(string);
+        }
+        String[] array = new String[historyArrayList.size()];
+        stringArrayList.toArray(array);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(mContext,
+                R.layout.item_library_search_history,
+                R.id.item_library_search_history_tv, array);
+
+        historyListView.setAdapter(arrayAdapter);
+    }
+
+    /**
+     * 历史记录中 Item 的点击事件
+     */
+    private void historyItemClickMethod() {
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String text = historyArrayList.get(position).getHistoryStr();
+                EventBus.getDefault().post(new TextEvent(text));
+
+                // TODO 问题: 使用LiteOrm 数据重复插入数据库, 是否会跟新位置
+                // TODO 调用方法 实现界面的跳转, 跳到F2
+                // 区别是 简单的搜索, 还是 加入对比时的搜索
+                clickSearchSaveAndTransact(text);
+            }
+        });
+    }
+
+    /**
+     * 通过Gson 请求 大家都在搜 的数据
+     */
     private void everyoneSearchGson() {
         GsonRequest<EveryoneSearchBean> gsonRequest = new GsonRequest<>(
                 EveryoneSearchBean.class, UrlValues.LIBRARY_SEARCH_EVERYONE_URL,
                 new Response.Listener<EveryoneSearchBean>() {
                     @Override
                     public void onResponse(EveryoneSearchBean response) {
-                        ArrayList<String> stringArrayList  = (ArrayList<String>) response.getKeywords();
+                        ArrayList<String> stringArrayList = (ArrayList<String>) response.getKeywords();
 
                         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
                         recyclerView.setLayoutManager(manager);
@@ -128,9 +191,9 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
                         recyclerView.setAdapter(adapter);
 
                         // 设置分隔线
-                        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+                        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
                                 LinearLayoutManager.VERTICAL));
-
+                        // 大家都在搜 Item 的点击实现
                         recyclerViewItemClickMethod(adapter, stringArrayList);
                     }
                 }, new Response.ErrorListener() {
@@ -142,29 +205,52 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
 
-    /** recyclerView 的 Item 的点击事件 */
+    /**
+     * recyclerView 的 Item 的点击事件
+     */
     private void recyclerViewItemClickMethod(MyEveryoneSearchRVAdapter adapter, final ArrayList<String> stringArrayList) {
         adapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                String itemStr = stringArrayList.get(position);
+
+                String recyclerItemStr = stringArrayList.get(position);
                 // EventBus 发布事件
-                EventBus.getDefault().post(new TextEvent(itemStr));
+                EventBus.getDefault().post(new TextEvent(recyclerItemStr));
 
-                // TODO 跳转 将字符串转换成 UTF_8 形成新接口,
-                // 实现第二个 Fragment 的跳转, 再将点击的 内容通过 EventBus 传递到搜索的EDT
-
+                clickSearchSaveAndTransact(recyclerItemStr);
             }
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.library_search_history_delete:
-                Toast.makeText(getActivity(), "清空历史记录", Toast.LENGTH_SHORT).show();
+    /**
+     * 点击搜索 或者 记录 或者 大家都在搜 后进行的 保存和跳转 事件
+     * 跳转 将字符串转换成 UTF_8 形成新接口
+     * @param itemText
+     */
+    private void clickSearchSaveAndTransact(String itemText) {
+        // 存入数据库
+        HistorySqlData historySqlData = new HistorySqlData();
+        historySqlData.setHistoryStr(itemText);
+        dbTool = new DBTool();
+        dbTool.insert(historySqlData);
+        // 替换 Fragment, 并传值
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
-                // TODO 清空记录集合, 调用 判断到集合为空时最近搜过不显示(gone)
+        ((SearchActivity)getActivity()).setTextStr(itemText);
+
+        if (getSearchTypeStr.equals(LibraryFragment.INTENT_SEARCH_SIMPLE_TYPE)) {
+            // 如果是简单的搜索
+            SearchSimpleFragment searchSimpleFragment = new SearchSimpleFragment();
+            transaction.replace(R.id.library_search_frame, searchSimpleFragment);
+            transaction.commit();
+        } else {
+            // 对比搜索
+            SearchCompareFragment searchCompareFragment = new SearchCompareFragment();
+            transaction.replace(R.id.library_search_frame, searchCompareFragment);
+            transaction.commit();
         }
+
     }
+
 }

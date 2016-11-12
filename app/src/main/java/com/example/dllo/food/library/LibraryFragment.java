@@ -12,12 +12,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
+import com.example.dllo.food.beans.event.SearchTypeEvent;
 import com.example.dllo.food.beans.library.LibraryBean;
 import com.example.dllo.food.library.more.LibraryMoreActivity;
 import com.example.dllo.food.library.search.SearchActivity;
 import com.example.dllo.food.values.UrlValues;
 import com.example.dllo.food.volley.GsonRequest;
 import com.example.dllo.food.volley.VolleySingleton;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,8 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     private GridView gridViewSort;
     private GridView gridViewBrand;
     private GridView gridViewDrink;
+
+    public static final String INTENT_SEARCH_SIMPLE_TYPE = "simpleSearch";
 
     @Override
     protected int getLayout() {
@@ -198,8 +203,13 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.library_btn_search:
-                // 搜索 
+                // 搜索
+                // EventBus 黏性发布事件: 发布搜索类型字符串
+                EventBus.getDefault().postSticky(
+                        new SearchTypeEvent(LibraryFragment.INTENT_SEARCH_SIMPLE_TYPE));
+
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("searchType", "simpleSearch");
                 startActivity(intent);
 
                 break;

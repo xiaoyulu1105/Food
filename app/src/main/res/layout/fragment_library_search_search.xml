@@ -28,7 +28,7 @@
                 <include layout="@layout/line_horizontal" />
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="10dp"
                     android:background="#f6f6f6"
                     android:gravity="center_vertical"
@@ -57,7 +57,7 @@
             <!--每一行有 2个 数据项, 选用 RecyclerView -->
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:background="#f6f6f6"
                 android:gravity="center_vertical"

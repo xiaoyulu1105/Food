@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * Created by dllo on 16/10/29.
+ * Created by XiaoyuLu on 16/10/29.
  *
  *  区分 Class<T> 与 T 的关系与区别
  */
@@ -52,7 +52,7 @@ public class DBTool {
         threadPoolExecutor.execute(new QueryRunnable<T>(tClass, onQueryListener));
     }
 
-    /* 实现 查询数据库的  外层 Runnable 泛型 类 */
+    /** 实现 查询数据库的  外层 Runnable 泛型 类 */
     private class QueryRunnable<T> implements Runnable{
 
         private Class<T> tClass;
@@ -70,7 +70,7 @@ public class DBTool {
         }
     }
 
-    /* 实现用 Handler将线程从子线程切换到主线程, 用接口对象将数据存入接口 */
+    /** 实现用 Handler将线程从子线程切换到主线程, 用接口对象将数据存入接口 */
     private class CallbackRunnable<T> implements Runnable{
 
         private OnQueryListener onQueryListener;
@@ -87,9 +87,9 @@ public class DBTool {
         }
     }
 
-    /* 定义 查询数据库的 泛型 接口 */
+    /** 定义 查询数据库的 泛型 接口 */
     public interface OnQueryListener<T>{
-        void onQuery(ArrayList<T> t);
+        void onQuery(ArrayList<T> tArrayList);
     }
 
 }
