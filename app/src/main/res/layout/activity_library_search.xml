@@ -52,7 +52,6 @@
     </LinearLayout>
     <include layout="@layout/line_horizontal" />
 
-    <!--TODO -->
     <FrameLayout
         android:id="@+id/library_search_frame"
         android:layout_width="match_parent"

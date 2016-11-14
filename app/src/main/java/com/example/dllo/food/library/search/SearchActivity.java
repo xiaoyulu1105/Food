@@ -49,6 +49,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     public static final String INTENT_SEARCH_TYPE = "searchType";
     private  String getSearchType; // 存放搜索的类型的字符串
 
+    // 刚进入SearchActivity时,需要SearchSearchFragment对象实现对搜索文本变化的监听
+    private SearchSearchFragment searchSearchFragment;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_library_search;
@@ -63,12 +66,19 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         setClick(this, imgBtnReturn, deleteIV, searchIV);
 
+        dbTool = new DBTool();
+        searchSearchFragment = new SearchSearchFragment();
+
         // 注册 EventBus 订阅者
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void initData() {
+
+        // 第一次进来将搜索记录清空
+        dbTool.deleteAllData(HistorySqlData.class);
+
         transactToSearchFragment();
 
         textEdtListenerMethod(textEdt);
@@ -76,22 +86,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         Intent intent = getIntent();
         getSearchType = intent.getStringExtra(SearchActivity.INTENT_SEARCH_TYPE);
         Toast.makeText(this, getSearchType, Toast.LENGTH_SHORT).show();
-    }
 
-    /** textEdt 的文本变化时 的监听事件 */
-    private void textEdtListenerMethod(final EditText textEdt) {
-        textEdt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                judgeIfTextNull(textEdt);
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                judgeIfTextNull(textEdt);
-            }
-        });
     }
 
     @Override
@@ -144,7 +139,23 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    /** 点击搜索 或者 记录 或者 大家都在搜 后进行的 保存和跳转 事件 */
+    /** textEdt 的文本变化时 的监听事件 */
+    private void textEdtListenerMethod(final EditText textEdt) {
+        textEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                judgeIfTextNull(textEdt);
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                judgeIfTextNull(textEdt);
+            }
+        });
+    }
+
+    /** 点击搜索  保存和跳转 事件 */
     private void clickSearchSaveAndTransact(String textStr) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -152,31 +163,44 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             // 如果是简单的搜索
             transaction.replace(R.id.library_search_frame, new SearchSimpleFragment());
             transaction.commit();
-            // TODO 获取到Activity中的搜索字符的 UTF_8 的数据
+
         } else {
             // 对比搜索
             transaction.replace(R.id.library_search_frame, new SearchCompareFragment());
             transaction.commit();
         }
-        // 存入数据库
-        saveHistoryDataToDB(textStr);
+        // 判断后 存入数据库
+        saveHistoryDataToDB(HistorySqlData.class, textStr);
 
     }
 
-    /** 保存数据到数据库 */
-    private void saveHistoryDataToDB(String textStr) {
-        HistorySqlData historySqlData = new HistorySqlData();
-        historySqlData.setHistoryStr(textStr);
-        dbTool = new DBTool();
-        dbTool.insert(historySqlData);
-
-        dbTool.queryAllData(HistorySqlData.class, new DBTool.OnQueryListener<HistorySqlData>() {
+    /**
+     * 判断数据库表中是否已有该数据, 再将数据存入数据库
+     * @param historySqlDataClass 数据库表
+     * @param textStr 查找的数据
+     * @return
+     */
+    private void saveHistoryDataToDB(final Class<HistorySqlData> historySqlDataClass, final String textStr) {
+        dbTool.queryAllData(historySqlDataClass, new DBTool.OnQueryListener<HistorySqlData>() {
             @Override
-            public void onQuery(ArrayList<HistorySqlData> t) {
-                Toast.makeText(SearchActivity.this, "historySqlData.size():" + t.size(), Toast.LENGTH_SHORT).show();
-                Log.d("SearchActivity", "historySqlData.size():");
+            public void onQuery(ArrayList<HistorySqlData> historySqlData) {
+                for (int i = 0; i < historySqlData.size(); i++) {
+                    String string = historySqlData.get(i).getHistoryStr();
+                    // 当数据库中存在时, 将数据库中的数据删除
+                    if (string.equals(textStr)) {
+                        dbTool.deleteHistoryByCondition(HistorySqlData.class, textStr);
+                    }
+                }
+                // 将数据 存入数据库
+                HistorySqlData historySqlData1 = new HistorySqlData();
+                long currentTime = System.currentTimeMillis();
+                historySqlData1.setHistoryStr(textStr);
+                historySqlData1.setHistoryTime(currentTime);
+
+                dbTool.insert(historySqlData1);
             }
         });
+
     }
 
     /** 判断输入框是否为空 */
@@ -195,8 +219,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void transactToSearchFragment() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        SearchSearchFragment searchSearchFragment = new SearchSearchFragment();
-        transaction.replace(R.id.library_search_frame, searchSearchFragment);
+        transaction.replace(R.id.library_search_frame, new SearchSearchFragment());
         transaction.commit();
 
     }

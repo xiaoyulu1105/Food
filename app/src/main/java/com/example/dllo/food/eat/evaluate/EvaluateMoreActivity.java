@@ -8,10 +8,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
+import com.example.dllo.food.sqltools.CollectionSqlData;
+import com.example.dllo.food.sqltools.DBTool;
 
 /**
  * Created by XiaoyuLu on 16/11/10.
@@ -26,6 +30,10 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
     private Button collectBtn;
 
     private String getLink;  // 点击测评中 Item 时传递过来的 网页的链接数据
+    private String getTitle; // 传递来的 Title
+    private LinearLayout collectionLl;
+    private ImageView collectionIV;
+    private DBTool dbTool;
 
     @Override
     protected int getLayout() {
@@ -37,16 +45,22 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
         returnImgBtn = bindView(R.id.eat_evaluate_more_return);
         webView = bindView(R.id.eat_evaluate_more_web);
         shareBtn = bindView(R.id.eat_evaluate_more_share);
-        collectBtn = bindView(R.id.eat_evaluate_more_collection);
 
-        setClick(this, returnImgBtn, shareBtn, collectBtn);
+        collectionLl = (LinearLayout)findViewById(R.id.eat_evaluate_more_collection_ll);
+        collectionIV = bindView(R.id.eat_evaluate_more_collection_iv);
+        collectBtn = bindView(R.id.eat_evaluate_more_collection_btn);
 
+        setClick(this, returnImgBtn, shareBtn, collectionIV, collectBtn);
+        collectionLl.setOnClickListener(this);
+
+        dbTool = new DBTool();
     }
 
     @Override
     protected void initData() {
         Intent intent = getIntent();
         getLink = intent.getStringExtra("link");
+        getTitle = intent.getStringExtra("title");
 
         webViewMethod(getLink);
     }
@@ -65,7 +79,6 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
     @Override
     public boolean onSupportNavigateUp() {
         finish();
-
         return super.onSupportNavigateUp();
     }
 
@@ -80,14 +93,39 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
                 Toast.makeText(this, "分享实现中...", Toast.LENGTH_SHORT).show();
 
                 break;
-            case R.id.eat_evaluate_more_collection:
-                // TODO 收藏功能需要实现
-                Toast.makeText(this, "收藏实现中...", Toast.LENGTH_SHORT).show();
+            case R.id.eat_evaluate_more_collection_ll:
+            case R.id.eat_evaluate_more_collection_iv:
+            case R.id.eat_evaluate_more_collection_btn:
+                saveOrCancelCollectionMethod();
 
                 break;
             default:
                 Log.d("EvaluateMoreActivity", "点错啦!");
                 break;
+        }
+    }
+
+    /** 保存或者取消收藏 */
+    private void saveOrCancelCollectionMethod() {
+        if (collectBtn.getText().toString().equals("已收藏")) {
+            // 取消收藏, 删除数据库数据
+            collectBtn.setText("收藏");
+            collectionIV.setImageResource(R.mipmap.ic_news_keep_default);
+            Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
+
+            dbTool.deleteCollectionByCondition(CollectionSqlData.class, getLink);
+
+        } else {
+            // 收藏, 存入数据库
+            collectBtn.setText("已收藏");
+            collectionIV.setImageResource(R.mipmap.ic_news_keep_heighlight);
+            Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+
+            CollectionSqlData collectionSqlData = new CollectionSqlData();
+            collectionSqlData.setTitle(getTitle);
+            collectionSqlData.setLink(getLink);
+
+            dbTool.insert(collectionSqlData);
         }
     }
 }

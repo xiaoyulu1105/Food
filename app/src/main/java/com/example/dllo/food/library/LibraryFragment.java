@@ -111,7 +111,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
                 LibraryBean.GroupBean groupBean = response.getGroup().get(2);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, groupBean, position);
+                putDataToFoodMore(intent, groupBean, position);
                 startActivity(intent);
             }
         });
@@ -134,7 +134,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
                 LibraryBean.GroupBean groupBean = response.getGroup().get(1);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, groupBean, position);
+                putDataToFoodMore(intent, groupBean, position);
                 startActivity(intent);
 
             }
@@ -162,7 +162,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
                 LibraryBean.GroupBean groupBean = response.getGroup().get(0);
 
                 Intent intent = new Intent(getActivity(), LibraryMoreActivity.class);
-                putDataInIntent(intent, groupBean, position);
+                putDataToFoodMore(intent, groupBean, position);
                 startActivity(intent);
 
             }
@@ -170,9 +170,8 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    /** CategoriesBean类的数据拆分后通过 Intent 传到下一个 Intent */
-    private void putDataInIntent(Intent intent, LibraryBean.GroupBean groupBean, int position) {
-
+    /** CategoriesBean 类的数据拆分后通过 Intent 传到下一个 Intent */
+    private void putDataToFoodMore(Intent intent, LibraryBean.GroupBean groupBean, int position) {
         String kind = groupBean.getKind();
         LibraryBean.GroupBean.CategoriesBean bean = groupBean.getCategories().get(position);
 

@@ -5,9 +5,67 @@
     android:layout_height="match_parent">
 
     <!--这是简单搜索一个东西后跳转出来的界面的布局-->
-    <TextView
+    <!--营养素排行-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="这是简单的搜索"/>
+        android:layout_height="@dimen/item_height_nutritional_element"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/library_search_simple_nutrition_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="营养素排行"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+        <ImageView
+            android:id="@+id/library_search_simple_nutrition_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height_nutritional_element"
+            android:src="@mipmap/ic_food_arrow_ordering"
+            android:clickable="true"
+            />
+        <!--TextView 用来占位-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <Button
+            android:id="@+id/library_search_simple_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="由高到低"
+            android:layout_gravity="center"
+            android:textColor="#d73d44"
+            android:background="@null"
+            android:paddingLeft="20dp"
+            android:visibility="invisible"
+            />
+        <ImageView
+            android:id="@+id/library_search_simple_order_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_food_ordering_down"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+    <include layout="@layout/line_horizontal"/>
+
+    <!--详细数据 用 ListView 进行显示-->
+    <ListView
+        android:id="@+id/library_search_simple_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        >
+    </ListView>
 
 </LinearLayout>

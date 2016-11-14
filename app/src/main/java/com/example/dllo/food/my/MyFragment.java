@@ -6,12 +6,13 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
+import com.example.dllo.food.my.collection.CollectionActivity;
 import com.example.dllo.food.tools.CircleDrawable;
 
 /**
@@ -21,7 +22,7 @@ import com.example.dllo.food.tools.CircleDrawable;
  */
 public class MyFragment extends BaseFragment implements View.OnClickListener{
 
-    private ImageButton settingImgBtn;
+    private ImageView settingIV;
     private Button loginBtn;
     private LinearLayout photoLl;
     private LinearLayout collectionLl;
@@ -37,7 +38,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     @Override
     protected void initViews() {
 
-        settingImgBtn = bindView(R.id.my_setting);
+        settingIV = bindView(R.id.my_setting);
         loginBtn = bindView(R.id.my_login);
         iconIV = bindView(R.id.my_icon);
 
@@ -50,7 +51,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
         CircleDrawable drawable = new CircleDrawable(bitmap);
         iconIV.setImageDrawable(drawable);
 
-        setClick(this, settingImgBtn, loginBtn);
+        setClick(this, settingIV, loginBtn);
         setClick(this, photoLl, collectionLl, foodDataLl, orderLl);
 
     }
@@ -76,19 +77,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
                 break;
             case R.id.my_photo_ll:
+                Toast.makeText(mContext, "我的照片实现中...", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.my_collection_ll:
+                // 界面跳转, 如果登录了就跳到收藏页, 需要带值跳转, 将账号和收藏的东西对应上
+                // TODO 未登录时则跳到登录界面
+                Intent intent2 = new Intent(mContext, CollectionActivity.class);
+                startActivity(intent2);
 
                 break;
             case R.id.my_data_ll:
+                Toast.makeText(mContext, "我的照片实现中...", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.my_order_ll:
+                Toast.makeText(mContext, "我的订单实现中...", Toast.LENGTH_SHORT).show();
 
                 break;
             default:
-                Log.d("MyFragment", "出错啦!");
+                Log.d("MyFragment", "点击出错啦!");
 
         }
     }

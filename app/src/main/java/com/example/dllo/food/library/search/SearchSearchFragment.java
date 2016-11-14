@@ -1,6 +1,5 @@
 package com.example.dllo.food.library.search;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,11 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -45,7 +41,7 @@ import java.util.ArrayList;
 public class SearchSearchFragment extends BaseFragment implements View.OnClickListener {
 
     private LinearLayout historyLl;  // 最近搜过的线性布局
-    private ListView historyListView; // 最近搜过的数据显示
+    private RecyclerView historyRV; // 最近搜过的数据显示
     private Button deleteHistoryBtn; // 删除历史记录
     private RecyclerView recyclerView; // 大家都在 的数据
 
@@ -53,6 +49,7 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
     private DBTool dbTool; // 用于对数据库的操作
 
     private String getSearchTypeStr; // 获取 EventBus 传递的搜索的类型的字符串
+
 
     @Override
     protected int getLayout() {
@@ -62,12 +59,11 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initViews() {
         historyLl = (LinearLayout) getView().findViewById(R.id.library_search_history_ll);
-        historyListView = bindView(R.id.library_search_history_list);
+        historyRV = bindView(R.id.library_search_history_list);
         deleteHistoryBtn = bindView(R.id.library_search_history_delete);
         recyclerView = bindView(R.id.library_search_search_recycler);
 
         setClick(this, deleteHistoryBtn);
-        historyItemClickMethod();
 
         historyArrayList = new ArrayList<>();
         dbTool = new DBTool();
@@ -103,7 +99,7 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.library_search_history_delete:
 
-                historyArrayList.clear();
+                dbTool.deleteAllData(HistorySqlData.class);
                 judgeIfHistoryNull();
 
                 break;
@@ -123,9 +119,10 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
                 historyArrayList = t;
 
                 if (historyArrayList.size() <= 0) {
-                    historyLl.setVisibility(View.GONE);
-                } else {
 
+                    historyLl.setVisibility(View.GONE);
+
+                } else {
                     showHistoryData(historyArrayList);
                 }
             }
@@ -138,35 +135,32 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
      */
     private void showHistoryData(ArrayList<HistorySqlData> historyArrayList) {
         historyLl.setVisibility(View.VISIBLE);
+
         // 将数据类集合中的字符串集合获取, 并转换成数组类型
+        // 集合顺序需要倒序
         ArrayList<String> stringArrayList = new ArrayList<>();
-        for (int i = 0; i < historyArrayList.size(); i++) {
+        for (int i = (historyArrayList.size() - 1); i >= 0 ; i--) {
             String string = historyArrayList.get(i).getHistoryStr();
             stringArrayList.add(string);
         }
-        String[] array = new String[historyArrayList.size()];
-        stringArrayList.toArray(array);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(mContext,
-                R.layout.item_library_search_history,
-                R.id.item_library_search_history_tv, array);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        historyRV.setLayoutManager(manager);
+        MyHistoryRVAdapter adapter = new MyHistoryRVAdapter();
+        adapter.setStringArrayList(stringArrayList);
+        historyRV.setAdapter(adapter);
 
-        historyListView.setAdapter(arrayAdapter);
+        historyRVItemClickMethod(adapter, historyArrayList);
     }
 
-    /**
-     * 历史记录中 Item 的点击事件
-     */
-    private void historyItemClickMethod() {
-        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    /** RV时历史记录中 Item 使用接口回调实现点击监听 */
+    private void historyRVItemClickMethod(MyHistoryRVAdapter adapter, final ArrayList<HistorySqlData> historyArrayList) {
+        adapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(int position) {
                 String text = historyArrayList.get(position).getHistoryStr();
                 EventBus.getDefault().post(new TextEvent(text));
 
-                // TODO 问题: 使用LiteOrm 数据重复插入数据库, 是否会跟新位置
-                // TODO 调用方法 实现界面的跳转, 跳到F2
-                // 区别是 简单的搜索, 还是 加入对比时的搜索
                 clickSearchSaveAndTransact(text);
             }
         });
@@ -224,16 +218,13 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
 
     /**
      * 点击搜索 或者 记录 或者 大家都在搜 后进行的 保存和跳转 事件
-     * 跳转 将字符串转换成 UTF_8 形成新接口
      * @param itemText
      */
     private void clickSearchSaveAndTransact(String itemText) {
-        // 存入数据库
-        HistorySqlData historySqlData = new HistorySqlData();
-        historySqlData.setHistoryStr(itemText);
-        dbTool = new DBTool();
-        dbTool.insert(historySqlData);
-        // 替换 Fragment, 并传值
+
+        saveHistoryDataToDB(HistorySqlData.class, itemText);
+
+        // 替换 Fragment, 并为SearchActivity的setTextStr方法设值, 最终是为了实现传值
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
@@ -250,6 +241,45 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
             transaction.replace(R.id.library_search_frame, searchCompareFragment);
             transaction.commit();
         }
+
+    }
+
+
+    /**
+     * 判断数据库表中是否已有该数据
+     * @param historySqlDataClass 数据库表
+     * @param textStr 查找的数据
+     * @return
+     */
+    private void saveHistoryDataToDB(final Class<HistorySqlData> historySqlDataClass, final String textStr) {
+        // TODO 问题: 去重 实现了, 但是多重复几次还将该数据直接删掉了, 数据限制10条记录
+        dbTool.queryAllData(historySqlDataClass, new DBTool.OnQueryListener<HistorySqlData>() {
+            @Override
+            public void onQuery(ArrayList<HistorySqlData> historySqlData) {
+
+                // 1. 当数据库中存在时, 将数据库中的数据删除
+                for (int i = 0; i < historySqlData.size(); i++) {
+                    String string = historySqlData.get(i).getHistoryStr();
+                    if (string.equals(textStr)) {
+                        dbTool.deleteHistoryByCondition(HistorySqlData.class, textStr);
+
+                    }
+                }
+                // 2. 当数据库数据已经存满 10条数据,删除最旧一条
+                if (historySqlData.size() >= 10){
+                    String oldText = historySqlData.get(0).getHistoryStr();
+                    dbTool.deleteHistoryByCondition(HistorySqlData.class, oldText);
+                }
+
+                // 3. 将数据 存入数据库
+                HistorySqlData historySqlData1 = new HistorySqlData();
+                long currentTime = System.currentTimeMillis();
+                historySqlData1.setHistoryTime(currentTime);
+                historySqlData1.setHistoryStr(textStr);
+
+                dbTool.insert(historySqlData1);
+            }
+        });
 
     }
 

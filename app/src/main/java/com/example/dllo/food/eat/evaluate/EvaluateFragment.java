@@ -63,8 +63,10 @@ public class EvaluateFragment extends BaseFragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 String link = response.getFeeds().get(position).getLink();
+                                String title = response.getFeeds().get(position).getTitle();
                                 Intent intent = new Intent(getActivity(), EvaluateMoreActivity.class);
                                 intent.putExtra("link", link);
+                                intent.putExtra("title", title);
                                 startActivity(intent);
                             }
                         });

@@ -55,17 +55,32 @@
             android:background="@null"
             android:layout_marginLeft="50dp"
             />
-        <Button
-            android:id="@+id/eat_evaluate_more_collection"
+        <LinearLayout
+            android:id="@+id/eat_evaluate_more_collection_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="收藏"
-            android:paddingRight="20dp"
-            android:drawableLeft="@mipmap/ic_news_keep_default"
-            android:background="@null"
+            android:orientation="horizontal"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="50dp"
-            />
+            android:layout_marginRight="60dp"
+            android:clickable="true">
+            <ImageView
+                android:id="@+id/eat_evaluate_more_collection_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_news_keep_default"
+                android:layout_gravity="center"
+                android:clickable="true"
+                />
+            <Button
+                android:id="@+id/eat_evaluate_more_collection_btn"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:text="收藏"
+                android:background="@null"
+                android:paddingRight="20dp"
+                />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -20,15 +20,16 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/my_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="14dp"
             android:layout_marginRight="5dp"
             android:src="@mipmap/ic_my_setting"
             android:background="@null"
+            android:clickable="true"
             />
 
         <ImageView
