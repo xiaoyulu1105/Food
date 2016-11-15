@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
-import com.example.dllo.food.sqltools.DBTool;
 
 import java.util.ArrayList;
 

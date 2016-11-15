@@ -48,9 +48,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     // 用于判断是简单搜索还是对比搜索, 这是传值时的KEY值
     public static final String INTENT_SEARCH_TYPE = "searchType";
     private  String getSearchType; // 存放搜索的类型的字符串
-
-    // 刚进入SearchActivity时,需要SearchSearchFragment对象实现对搜索文本变化的监听
-    private SearchSearchFragment searchSearchFragment;
+    private FragmentManager manager;  // 用于实现替换 Fragment 的管理员
 
     @Override
     protected int getLayout() {
@@ -67,7 +65,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         setClick(this, imgBtnReturn, deleteIV, searchIV);
 
         dbTool = new DBTool();
-        searchSearchFragment = new SearchSearchFragment();
+        manager = getSupportFragmentManager();
 
         // 注册 EventBus 订阅者
         EventBus.getDefault().register(this);
@@ -75,9 +73,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
-
-        // 第一次进来将搜索记录清空
-        dbTool.deleteAllData(HistorySqlData.class);
 
         transactToSearchFragment();
 
@@ -157,7 +152,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     /** 点击搜索  保存和跳转 事件 */
     private void clickSearchSaveAndTransact(String textStr) {
-        FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         if (getSearchType.equals(LibraryFragment.INTENT_SEARCH_SIMPLE_TYPE)) {
             // 如果是简单的搜索
@@ -184,14 +178,23 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         dbTool.queryAllData(historySqlDataClass, new DBTool.OnQueryListener<HistorySqlData>() {
             @Override
             public void onQuery(ArrayList<HistorySqlData> historySqlData) {
+
+                // TODO 去重存在很大 的问题 !!!
                 for (int i = 0; i < historySqlData.size(); i++) {
                     String string = historySqlData.get(i).getHistoryStr();
-                    // 当数据库中存在时, 将数据库中的数据删除
+                    // 1. 当数据库中存在时, 将数据库中的数据删除
                     if (string.equals(textStr)) {
                         dbTool.deleteHistoryByCondition(HistorySqlData.class, textStr);
                     }
                 }
-                // 将数据 存入数据库
+
+                // 2. 当数据库数据已经存满 10条数据,删除最旧一条
+                if (historySqlData.size() >= 10){
+                    String oldText = historySqlData.get(0).getHistoryStr();
+                    dbTool.deleteHistoryByCondition(HistorySqlData.class, oldText);
+                }
+
+                // 3. 将数据 存入数据库
                 HistorySqlData historySqlData1 = new HistorySqlData();
                 long currentTime = System.currentTimeMillis();
                 historySqlData1.setHistoryStr(textStr);

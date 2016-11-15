@@ -47,12 +47,30 @@
         >
     </ListView>
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="食物派 版本号: V2.6"
-        android:gravity="center"
-        />
+        android:layout_weight="2"
+        >
+        <Button
+            android:id="@+id/my_set_cancel_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:background="#ec5553"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="食物派 版本号: V2.6"
+            android:gravity="center"
+            android:layout_below="@id/my_set_cancel_login"
+            />
+    </RelativeLayout>
+
+
 
 </LinearLayout>

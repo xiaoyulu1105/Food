@@ -17,23 +17,33 @@ import com.example.dllo.food.base.BaseActivity;
 import com.example.dllo.food.sqltools.CollectionSqlData;
 import com.example.dllo.food.sqltools.DBTool;
 
+import java.util.ArrayList;
+
 /**
  * Created by XiaoyuLu on 16/11/10.
  *
- * 点击 狂吃 中的 测评 后, 跳转到该Activity
+ * 点击 狂吃 中的 测评, 知识, 美食 后, 跳转到该Activity
+ * 在收藏中 取消收藏后, 收藏列表 不能马上删除该记录, 怎么办?
+ * 解决发方法: 用广播实现
  */
 public class EvaluateMoreActivity extends BaseActivity implements View.OnClickListener{
 
     private ImageButton returnImgBtn;
     private WebView webView;
     private Button shareBtn;
+    private LinearLayout collectionLl;
+    private ImageView collectionIV;
     private Button collectBtn;
 
     private String getLink;  // 点击测评中 Item 时传递过来的 网页的链接数据
     private String getTitle; // 传递来的 Title
-    private LinearLayout collectionLl;
-    private ImageView collectionIV;
     private DBTool dbTool;
+
+    public static final String BROADCAST_ARTICLE_KEY = "broadcast";
+    public static final String BROADCAST_ARTICLE_LINK = "link";
+
+    public static final String INTENT_ARTICLE_TITLE = "title";
+    public static final String INTENT_ARTICLE_LINK = "link";
 
     @Override
     protected int getLayout() {
@@ -62,7 +72,26 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
         getLink = intent.getStringExtra("link");
         getTitle = intent.getStringExtra("title");
 
+        judgeIfCollection(getLink);
+
         webViewMethod(getLink);
+    }
+
+    /** 判断收藏数据库中是否有该链接, 有则将红心设置为红色 */
+    private void judgeIfCollection(final String getLink) {
+        dbTool.queryAllData(CollectionSqlData.class, new DBTool.OnQueryListener<CollectionSqlData>() {
+            @Override
+            public void onQuery(ArrayList<CollectionSqlData> collectionSqlDatas) {
+                for (int i = 0; i < collectionSqlDatas.size(); i++) {
+                    String link = collectionSqlDatas.get(i).getLink();
+                    if (link.equals(getLink)){
+                        // 当该文章被收藏过时, 桃心为红色
+                        collectBtn.setText("已收藏");
+                        collectionIV.setImageResource(R.mipmap.ic_news_keep_heighlight);
+                    }
+                }
+            }
+        });
     }
 
     /** 实现网页内容铺建的 相关操作 */
@@ -114,6 +143,12 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
 
             dbTool.deleteCollectionByCondition(CollectionSqlData.class, getLink);
+
+            // 为了更快的将消息传播出去
+            // 我们可以选择用广播, 或者 EventBus
+            Intent intent = new Intent("broadcast");
+            intent.putExtra("link", getLink);
+            sendBroadcast(intent);
 
         } else {
             // 收藏, 存入数据库
