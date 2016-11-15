@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import com.example.dllo.food.base.BaseActivity;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by XiaoyuLu on 16/11/5.
  *

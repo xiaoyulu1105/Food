@@ -11,22 +11,31 @@
         android:background="@color/colorWhite"
         android:orientation="horizontal">
 
-        <ImageButton
+        <Button
             android:id="@+id/my_login_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="10dp"
             android:background="@null"
-            android:src="@mipmap/ic_back_dark_center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:drawableLeft="@mipmap/ic_back_dark_center"
             android:text="登录"
             android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/my_login_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号登录"
+            android:background="@null"
+            android:layout_gravity="center"
+            />
+
     </LinearLayout>
     <include layout="@layout/line_horizontal" />
 

@@ -8,6 +8,8 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
 
+    <color name="colorBlack1">#1e1e1e</color>
+
     <!--Radio选中与为选中的颜色-->
     <color name="colorIsChecked">#e25557</color>
     <color name="colorNotChecked">#9e9595</color>

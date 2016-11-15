@@ -1,9 +1,9 @@
 package com.example.dllo.food.my;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.dllo.food.R;
@@ -15,6 +15,14 @@ import com.example.dllo.food.base.BaseActivity;
  * 登录界面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
+
+    private Button returnBtn;
+    private Button qqBtn;
+    private Button wechatBtn;
+    private Button weBoBtn;
+    private Button booHeeBtn;
+    private Button loginBtn; // 账号登录
+
     @Override
     protected int getLayout() {
         return R.layout.activity_login;
@@ -22,14 +30,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void initViews() {
-        ImageButton returnImgBtn = bindView(R.id.my_login_return);
-        Button qqBtn = bindView(R.id.my_login_qq);
-        Button weChatBtn = bindView(R.id.my_login_wechat);
-        Button weBoBtn = bindView(R.id.my_login_weibo);
-        Button booHeeBtn = bindView(R.id.my_login_boohee);
+        returnBtn = bindView(R.id.my_login_return);
+        loginBtn = bindView(R.id.my_login_login);
 
-        setClick(this, returnImgBtn);
-        setClick(this, qqBtn, weChatBtn, weBoBtn, booHeeBtn);
+        qqBtn = bindView(R.id.my_login_qq);
+        wechatBtn = bindView(R.id.my_login_wechat);
+        weBoBtn = bindView(R.id.my_login_weibo);
+        booHeeBtn = bindView(R.id.my_login_boohee);
+
+        setClick(this, returnBtn, loginBtn);
+        setClick(this, qqBtn, wechatBtn, weBoBtn, booHeeBtn);
     }
 
     @Override
@@ -41,8 +51,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.my_login_return:
-                // 点击 返回箭头
+                Toast.makeText(this, "return", Toast.LENGTH_SHORT).show();
+                // TODO 疑惑: 为什么不返回 MainActivity, 而是跳出一个新界面
                 finish();
+
+                break;
+            case R.id.my_login_login:
+                Intent intent = new Intent(LoginActivity.this, MyLoginActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.my_login_qq:
@@ -73,4 +89,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 Log.d("LoginActivity", "出错啦!");
         }
     }
+
 }
