@@ -150,15 +150,16 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
         adapter.setStringArrayList(stringArrayList);
         historyRV.setAdapter(adapter);
 
-        historyRVItemClickMethod(adapter, historyArrayList);
+        historyRVItemClickMethod(adapter, stringArrayList);
     }
 
     /** RV时历史记录中 Item 使用接口回调实现点击监听 */
-    private void historyRVItemClickMethod(MyHistoryRVAdapter adapter, final ArrayList<HistorySqlData> historyArrayList) {
+    private void historyRVItemClickMethod(MyHistoryRVAdapter adapter, final ArrayList<String> stringArrayList) {
         adapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                String text = historyArrayList.get(position).getHistoryStr();
+
+                String text = stringArrayList.get(position);
                 EventBus.getDefault().post(new TextEvent(text));
 
                 clickSearchSaveAndTransact(text);
@@ -222,7 +223,7 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
      */
     private void clickSearchSaveAndTransact(String itemText) {
 
-        saveHistoryDataToDB(HistorySqlData.class, itemText);
+        dbTool.insertHistory(itemText);
 
         // 替换 Fragment, 并为SearchActivity的setTextStr方法设值, 最终是为了实现传值
         FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -244,43 +245,5 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
 
     }
 
-
-    /**
-     * 判断数据库表中是否已有该数据
-     * @param historySqlDataClass 数据库表
-     * @param textStr 查找的数据
-     * @return
-     */
-    private void saveHistoryDataToDB(final Class<HistorySqlData> historySqlDataClass, final String textStr) {
-        // TODO 问题: 去重 实现了, 但是多重复几次还将该数据直接删掉了, 数据限制10条记录
-        dbTool.queryAllData(historySqlDataClass, new DBTool.OnQueryListener<HistorySqlData>() {
-            @Override
-            public void onQuery(ArrayList<HistorySqlData> historySqlData) {
-
-                // 1. 当数据库中存在时, 将数据库中的数据删除
-                for (int i = 0; i < historySqlData.size(); i++) {
-                    String string = historySqlData.get(i).getHistoryStr();
-                    if (string.equals(textStr)) {
-                        dbTool.deleteHistoryByCondition(HistorySqlData.class, textStr);
-
-                    }
-                }
-                // 2. 当数据库数据已经存满 10条数据,删除最旧一条
-                if (historySqlData.size() >= 10){
-                    String oldText = historySqlData.get(0).getHistoryStr();
-                    dbTool.deleteHistoryByCondition(HistorySqlData.class, oldText);
-                }
-
-                // 3. 将数据 存入数据库
-                HistorySqlData historySqlData1 = new HistorySqlData();
-                long currentTime = System.currentTimeMillis();
-                historySqlData1.setHistoryTime(currentTime);
-                historySqlData1.setHistoryStr(textStr);
-
-                dbTool.insert(historySqlData1);
-            }
-        });
-
-    }
 
 }

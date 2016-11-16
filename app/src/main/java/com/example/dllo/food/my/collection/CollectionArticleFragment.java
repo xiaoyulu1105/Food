@@ -8,14 +8,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 import com.example.dllo.food.eat.evaluate.EvaluateMoreActivity;
+import com.example.dllo.food.my.LoginActivity;
 import com.example.dllo.food.sqltools.CollectionSqlData;
 import com.example.dllo.food.sqltools.DBTool;
 
 import java.util.ArrayList;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by XiaoyuLu on 16/11/14.
@@ -25,10 +29,16 @@ import java.util.ArrayList;
 public class CollectionArticleFragment extends BaseFragment {
 
     private ListView listView;
-    private DBTool dbTool;
     private LinearLayout emptyLl; // 当没有收藏时显示该布局
+
     private ArrayList<CollectionSqlData> arrayList;  // 装载 ListView 显示的数据集合
     private MyCollectArticleBroadcast broadcast;
+
+
+    private DBTool dbTool;
+
+    private BmobUser bmobUser;
+    private String getUsername;
 
     @Override
     protected int getLayout() {
@@ -41,12 +51,16 @@ public class CollectionArticleFragment extends BaseFragment {
         emptyLl = (LinearLayout) getView().findViewById(R.id.my_collection_article_null);
 
         dbTool = new DBTool();
+        arrayList = new ArrayList<>();
     }
 
     @Override
     protected void initData() {
 
-        showCollectionArticle();
+        bmobUser = BmobUser.getCurrentUser(BmobUser.class);
+        getUsername = bmobUser.getUsername();
+
+        judgeIfLoginMethod();
 
         // 注册广播
         broadcast = new MyCollectArticleBroadcast();
@@ -61,20 +75,18 @@ public class CollectionArticleFragment extends BaseFragment {
         mContext.unregisterReceiver(broadcast);
     }
 
-    /** 显示收藏的数据 */
-    private void showCollectionArticle() {
-        dbTool.queryAllData(CollectionSqlData.class, new DBTool.OnQueryListener<CollectionSqlData>() {
+    /** 判断收藏数据库中是否有数据, 有则显示 */
+    private void showCollectionArticle(String getUsername) {
+        dbTool.queryCollectionDataByUsername(getUsername, new DBTool.OnQueryListener<CollectionSqlData>() {
             @Override
             public void onQuery(final ArrayList<CollectionSqlData> collectionSqlDatas) {
-
-                arrayList = new ArrayList<>();
-                arrayList = collectionSqlDatas;
                 if (collectionSqlDatas.size() <= 0) {
                     // 当收藏记录为空
                     emptyLl.setVisibility(View.VISIBLE);
-                } else {
 
+                } else {
                     // 当收藏记录不为空
+                    arrayList = collectionSqlDatas;
                     MyCollectionArticleLVAdapter adapter = new MyCollectionArticleLVAdapter();
                     adapter.setArrayList(arrayList);
                     listView.setAdapter(adapter);
@@ -91,11 +103,23 @@ public class CollectionArticleFragment extends BaseFragment {
                         }
                     });
                 }
-
             }
         });
-
     }
+
+    /** 判断是否登录 */
+    private void judgeIfLoginMethod() {
+
+        if (bmobUser == null) {
+            Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent1 = new Intent(mContext, LoginActivity.class);
+            startActivity(intent1);
+
+        } else {
+            showCollectionArticle(getUsername);
+        }
+    }
+
 
     /** 内部类 实现广播接收器 */
     private class MyCollectArticleBroadcast extends BroadcastReceiver {

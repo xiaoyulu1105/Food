@@ -13,15 +13,25 @@ public class CollectionSqlData {
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     private int id;
 
+    private String username;
     private String title;
     private String link;
 
-    public CollectionSqlData(String title, String link) {
+    public CollectionSqlData(String username, String title, String link) {
+        this.username = username;
         this.title = title;
         this.link = link;
     }
 
     public CollectionSqlData() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getTitle() {

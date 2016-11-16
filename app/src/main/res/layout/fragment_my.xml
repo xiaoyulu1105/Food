@@ -50,6 +50,33 @@
             android:text="点击登录"
             android:textColor="@color/colorWhite"
             android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/my_login_already_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/my_login_already_username"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="显示用户名"
+                android:layout_gravity="center"
+                />
+            <Button
+                android:id="@+id/my_login_already_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改个人信息"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/shape_login_mine"
+                android:layout_gravity="center"
+                android:layout_marginBottom="2dp"
+                />
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -146,7 +173,7 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="我的照片" />
+                android:text="上传食物数据" />
 
             <ImageView
                 android:layout_width="wrap_content"

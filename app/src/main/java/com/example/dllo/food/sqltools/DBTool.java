@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.dllo.food.values.DBValues;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
 
 import java.util.ArrayList;
@@ -43,6 +44,42 @@ public class DBTool {
         public void run() {
             liteOrm.insert(t);
         }
+    }
+
+    /** 自定义方法, 实现去重后插入数据 */
+    public void insertHistory(final String history){
+        threadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                queryAllData(HistorySqlData.class, new OnQueryListener<HistorySqlData>() {
+                    @Override
+                    public void onQuery(ArrayList<HistorySqlData> historySqlData) {
+
+                        // 1. 当数据库中存在时, 将数据库中的数据删除
+                        for (int i = 0; i < historySqlData.size(); i++) {
+                            String string = historySqlData.get(i).getHistoryStr();
+                            if (string.equals(history)) {
+                                liteOrm.delete(new WhereBuilder(HistorySqlData.class)
+                                        .where("historyStr = ?", history));
+                            }
+                        }
+                        // 2. 当数据库数据已经存满 10条数据,删除最旧一条
+                        if (historySqlData.size() >= 10){
+                            String oldText = historySqlData.get(0).getHistoryStr();
+                            liteOrm.delete(new WhereBuilder(HistorySqlData.class)
+                                    .where("historyStr = ?", oldText));
+                        }
+                        // 3. 将数据 存入数据库
+                        HistorySqlData historySqlData1 = new HistorySqlData();
+                        long currentTime = System.currentTimeMillis();
+                        historySqlData1.setHistoryTime(currentTime);
+                        historySqlData1.setHistoryStr(history);
+
+                        liteOrm.insert(historySqlData1);
+                    }
+                });
+            }
+        });
     }
 
     /** 删除 数据库所有数据 泛型方法实现 */
@@ -88,20 +125,22 @@ public class DBTool {
     }
 
     /** 按条件 删除某一条 收藏数据 */
-    public void deleteCollectionByCondition(Class<CollectionSqlData> collectionSqlDataClass, String getLink) {
-        threadPoolExecutor.execute(new DeleteCollectionDataByCondRunnable(collectionSqlDataClass, getLink));
+    public void deleteCollectionByCondition(Class<CollectionSqlData> collectionSqlDataClass, String username, String getLink) {
+        threadPoolExecutor.execute(new DeleteCollectionDataByCondRunnable(collectionSqlDataClass, username, getLink));
     }
     // 内部类: 按条件 删除某一条 收藏数据
     private class DeleteCollectionDataByCondRunnable implements Runnable {
         private Class<CollectionSqlData> collectionSqlDataClass;
+        private String username;
         private String link;
-        public DeleteCollectionDataByCondRunnable(Class<CollectionSqlData> collectionSqlDataClass, String getLink) {
+        public DeleteCollectionDataByCondRunnable(Class<CollectionSqlData> collectionSqlDataClass, String username, String getLink) {
             this.collectionSqlDataClass = collectionSqlDataClass;
+            this.username = username;
             this.link = getLink;
         }
         @Override
         public void run() {
-            liteOrm.delete(new WhereBuilder(collectionSqlDataClass).where("link = ?", link));
+            liteOrm.delete(new WhereBuilder(collectionSqlDataClass).where("username = ? and link = ?", username, link));
         }
     }
 
@@ -147,6 +186,52 @@ public class DBTool {
             onQueryListener.onQuery(tArrayList);
         }
     }
+
+    // 自定义方法, 实现按用户名查询
+    /** 1.1 使用接口回调将数据返回到 主线程, 所以返回值不需要有, 也不应该有 !!! */
+    public void queryCollectionDataByUsername( String username, OnQueryListener<CollectionSqlData> onQueryListener) {
+
+        threadPoolExecutor.execute(new QueryCollectionRunnable(username, onQueryListener));
+    }
+
+    /** 1.2 按条件 查询 收藏 数据库的  外层 Runnable  类 */
+    private class QueryCollectionRunnable implements Runnable{
+
+        private String username;
+        private OnQueryListener onQueryListener;
+
+        public QueryCollectionRunnable(String username, OnQueryListener onQueryListener) {
+            this.username = username;
+            this.onQueryListener = onQueryListener;
+        }
+
+        @Override
+        public void run() {
+            ArrayList<CollectionSqlData> tArrayList = liteOrm.query(
+                    new QueryBuilder<>(CollectionSqlData.class).where("username = ?", username));
+            handler.post(new CallbackCollectionRunnable(onQueryListener, tArrayList));
+        }
+    }
+
+    /** 1.3 实现用 Handler将线程从子线程切换到主线程, 用接口对象将数据存入接口 */
+    private class CallbackCollectionRunnable implements Runnable{
+
+        private OnQueryListener onQueryListener;
+        private ArrayList<CollectionSqlData> tArrayList;
+
+        public CallbackCollectionRunnable(OnQueryListener onQueryListener, ArrayList<CollectionSqlData> tArrayList) {
+            this.onQueryListener = onQueryListener;
+            this.tArrayList = tArrayList;
+        }
+
+        @Override
+        public void run() {
+            onQueryListener.onQuery(tArrayList);
+        }
+    }
+
+
+
 
     /** 定义 查询数据库的 泛型 接口 */
     public interface OnQueryListener<T>{

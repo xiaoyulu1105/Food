@@ -68,6 +68,7 @@
         <activity android:name=".my.collection.CollectionActivity"/>
         <activity android:name=".my.MyLoginActivity"/>
         <activity android:name=".my.MyRegisterActivity"/>
+        <activity android:name=".my.MyOtherActivity"/>
 
 
     </application>

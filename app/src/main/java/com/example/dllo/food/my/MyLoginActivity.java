@@ -9,9 +9,6 @@ import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
-import com.example.dllo.food.beans.event.UsernameEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

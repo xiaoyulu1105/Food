@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
+import com.example.dllo.food.my.LoginActivity;
 import com.example.dllo.food.sqltools.CollectionSqlData;
 import com.example.dllo.food.sqltools.DBTool;
 
 import java.util.ArrayList;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by XiaoyuLu on 16/11/10.
@@ -44,6 +47,9 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
 
     public static final String INTENT_ARTICLE_TITLE = "title";
     public static final String INTENT_ARTICLE_LINK = "link";
+
+    private BmobUser bmobUser;
+    private String getUsername;
 
     @Override
     protected int getLayout() {
@@ -72,19 +78,21 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
         getLink = intent.getStringExtra("link");
         getTitle = intent.getStringExtra("title");
 
-        judgeIfCollection(getLink);
+        bmobUser = BmobUser.getCurrentUser(BmobUser.class);
+        getUsername = bmobUser.getUsername();
 
+        judgeIfCollection(getUsername, getLink);
         webViewMethod(getLink);
     }
 
     /** 判断收藏数据库中是否有该链接, 有则将红心设置为红色 */
-    private void judgeIfCollection(final String getLink) {
-        dbTool.queryAllData(CollectionSqlData.class, new DBTool.OnQueryListener<CollectionSqlData>() {
+    private void judgeIfCollection(String getUsername, final String getLink) {
+        dbTool.queryCollectionDataByUsername(getUsername, new DBTool.OnQueryListener<CollectionSqlData>() {
             @Override
             public void onQuery(ArrayList<CollectionSqlData> collectionSqlDatas) {
                 for (int i = 0; i < collectionSqlDatas.size(); i++) {
                     String link = collectionSqlDatas.get(i).getLink();
-                    if (link.equals(getLink)){
+                    if (link.equals(getLink)) {
                         // 当该文章被收藏过时, 桃心为红色
                         collectBtn.setText("已收藏");
                         collectionIV.setImageResource(R.mipmap.ic_news_keep_heighlight);
@@ -125,7 +133,7 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
             case R.id.eat_evaluate_more_collection_ll:
             case R.id.eat_evaluate_more_collection_iv:
             case R.id.eat_evaluate_more_collection_btn:
-                saveOrCancelCollectionMethod();
+                judgeIfLoginMethod();
 
                 break;
             default:
@@ -135,14 +143,31 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
     }
 
     /** 保存或者取消收藏 */
-    private void saveOrCancelCollectionMethod() {
+    private void judgeIfLoginMethod() {
+
+        // TODO 判断是否登录
+        if (bmobUser == null) {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent1 = new Intent(EvaluateMoreActivity.this, LoginActivity.class);
+            startActivity(intent1);
+
+        } else {
+            saveOrCancelCollectMethod(getUsername);
+        }
+
+
+
+    }
+
+    /** 将收藏的数据和用户名绑定在一起 实现保存和取消  */
+    private void saveOrCancelCollectMethod(String getUsername) {
         if (collectBtn.getText().toString().equals("已收藏")) {
             // 取消收藏, 删除数据库数据
             collectBtn.setText("收藏");
             collectionIV.setImageResource(R.mipmap.ic_news_keep_default);
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
 
-            dbTool.deleteCollectionByCondition(CollectionSqlData.class, getLink);
+            dbTool.deleteCollectionByCondition(CollectionSqlData.class, getUsername, getLink);
 
             // 为了更快的将消息传播出去
             // 我们可以选择用广播, 或者 EventBus
@@ -157,6 +182,7 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
             Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
 
             CollectionSqlData collectionSqlData = new CollectionSqlData();
+            collectionSqlData.setUsername(getUsername);
             collectionSqlData.setTitle(getTitle);
             collectionSqlData.setLink(getLink);
 

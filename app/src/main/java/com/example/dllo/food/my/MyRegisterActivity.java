@@ -104,8 +104,6 @@ public class MyRegisterActivity extends BaseActivity implements View.OnClickList
         bmobUser.setUsername(getUsername);
         bmobUser.setPassword(getPassword);
 
-        Log.d("MyRegisterActivity", "bmobUser:" + bmobUser);
-
         bmobUser.signUp(new SaveListener<BmobUser>() {
             @Override
             public void done(BmobUser bmobUser, BmobException e) {

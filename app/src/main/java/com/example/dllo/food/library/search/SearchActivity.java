@@ -80,7 +80,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         Intent intent = getIntent();
         getSearchType = intent.getStringExtra(SearchActivity.INTENT_SEARCH_TYPE);
-        Toast.makeText(this, getSearchType, Toast.LENGTH_SHORT).show();
+        Log.d("SearchActivity", getSearchType);
 
     }
 
@@ -152,6 +152,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     /** 点击搜索  保存和跳转 事件 */
     private void clickSearchSaveAndTransact(String textStr) {
+
+        dbTool.insertHistory(textStr);
+
         FragmentTransaction transaction = manager.beginTransaction();
         if (getSearchType.equals(LibraryFragment.INTENT_SEARCH_SIMPLE_TYPE)) {
             // 如果是简单的搜索
@@ -163,46 +166,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             transaction.replace(R.id.library_search_frame, new SearchCompareFragment());
             transaction.commit();
         }
-        // 判断后 存入数据库
-        saveHistoryDataToDB(HistorySqlData.class, textStr);
-
-    }
-
-    /**
-     * 判断数据库表中是否已有该数据, 再将数据存入数据库
-     * @param historySqlDataClass 数据库表
-     * @param textStr 查找的数据
-     * @return
-     */
-    private void saveHistoryDataToDB(final Class<HistorySqlData> historySqlDataClass, final String textStr) {
-        dbTool.queryAllData(historySqlDataClass, new DBTool.OnQueryListener<HistorySqlData>() {
-            @Override
-            public void onQuery(ArrayList<HistorySqlData> historySqlData) {
-
-                // TODO 去重存在很大 的问题 !!!
-                for (int i = 0; i < historySqlData.size(); i++) {
-                    String string = historySqlData.get(i).getHistoryStr();
-                    // 1. 当数据库中存在时, 将数据库中的数据删除
-                    if (string.equals(textStr)) {
-                        dbTool.deleteHistoryByCondition(HistorySqlData.class, textStr);
-                    }
-                }
-
-                // 2. 当数据库数据已经存满 10条数据,删除最旧一条
-                if (historySqlData.size() >= 10){
-                    String oldText = historySqlData.get(0).getHistoryStr();
-                    dbTool.deleteHistoryByCondition(HistorySqlData.class, oldText);
-                }
-
-                // 3. 将数据 存入数据库
-                HistorySqlData historySqlData1 = new HistorySqlData();
-                long currentTime = System.currentTimeMillis();
-                historySqlData1.setHistoryStr(textStr);
-                historySqlData1.setHistoryTime(currentTime);
-
-                dbTool.insert(historySqlData1);
-            }
-        });
 
     }
 
