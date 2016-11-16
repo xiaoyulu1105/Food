@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * Created by XiaoyuLu on 16/11/11.
  *
- * 食物百科-搜索-大家都在搜的网络数据类
+ * 食物百科-搜索-大家都在搜的 数据类
+ * 用于 Gson 请求
  */
 public class EveryoneSearchBean {
 

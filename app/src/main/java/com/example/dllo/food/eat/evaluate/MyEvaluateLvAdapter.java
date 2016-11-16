@@ -6,14 +6,14 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.EvaluateBean;
+import com.example.dllo.food.beans.eat.EvaluateBean;
 
 import java.util.ArrayList;
 
 /**
  * Created by XiaoyuLu on 16/11/3.
  *
- * 逛吃选项 里的 测评 的ListView的适配器
+ * 逛吃选项 里的 测评 的 ListView 的适配器
  */
 public class MyEvaluateLvAdapter extends BaseAdapter{
 

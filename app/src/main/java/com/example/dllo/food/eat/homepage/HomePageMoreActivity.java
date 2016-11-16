@@ -35,6 +35,14 @@ public class HomePageMoreActivity extends BaseActivity implements View.OnClickLi
     private String getImageUrl;
     private int getLikeCount;
 
+
+    // 定义静态常量, 作为传值时 的 key 值
+    public static final String INTENT_ICON = "iconUrl";
+    public static final String INTENT_PUBLISHER = "publisher";
+    public static final String INTENT_IMAGE = "imageUrl";
+    public static final String INTENT_LIKE_CT = "likeCt";
+    public static final String INTENT_BUNDLE_KEY = "bundle";
+
     @Override
     protected int getLayout() {
         return R.layout.activity_eat_homepage_more;
@@ -64,11 +72,11 @@ public class HomePageMoreActivity extends BaseActivity implements View.OnClickLi
     /** 获取 Intent的传值, 并铺建 */
     private void getIntentDataAndShow() {
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("bundle");
-        getIconUrl = bundle.getString(HomePageFragment.INTENT_HOMEPAGE_MORE_ICON);
-        getPublisher = bundle.getString(HomePageFragment.INTENT_HOMEPAGE_MORE_PUBLISHER);
-        getImageUrl = bundle.getString(HomePageFragment.INTENT_HOMEPAGE_MORE_IMAGE);
-        getLikeCount = bundle.getInt(HomePageFragment.INTENT_HOMEPAGE_MORE_LIKE_CT);
+        Bundle bundle = intent.getBundleExtra(INTENT_BUNDLE_KEY);
+        getIconUrl = bundle.getString(INTENT_ICON);
+        getPublisher = bundle.getString(INTENT_PUBLISHER);
+        getImageUrl = bundle.getString(INTENT_IMAGE);
+        getLikeCount = bundle.getInt(INTENT_LIKE_CT);
 
         Picasso.with(HomePageMoreActivity.this).load(getIconUrl).into(iconIV);
         publisherTV.setText(getPublisher);

@@ -5,10 +5,10 @@ package com.example.dllo.food.beans.event;
  *
  * 参考: Course_Small 项目
  * EventBus 第一步: 创建Event 数据类
- * 第二步, 发布事件, 在 SearchSearchFragment 中发布
- * 第二步, 注册订阅者, 在 SearchActivity 中注册
+ * 第二步, 发布事件, 在 SearchSearchFragment 中 点击历史 或者大家都在搜 时发布
+ * 第二步, 注册订阅者, 在 SearchActivity 中注册, 将接收数据 显示在 输入栏
  *
- * 传值的方法: 广播, EventBus, Bundle 也可以?
+ * 传值的方法: 广播, EventBus, Bundle
  */
 public class TextEvent {
 

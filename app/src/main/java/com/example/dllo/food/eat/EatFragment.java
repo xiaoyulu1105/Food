@@ -25,7 +25,6 @@ public class EatFragment extends BaseFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ArrayList<Fragment> fragmentArrayList;
-    private ImageButton camera;
 
     @Override
     protected int getLayout() {
@@ -37,7 +36,10 @@ public class EatFragment extends BaseFragment {
         tabLayout = (TabLayout) getView().findViewById(R.id.eat_tab_layout);
         viewPager = (ViewPager) getView().findViewById(R.id.eat_view_pager);
 
-        camera = bindView(R.id.eat_label_camera);
+    }
+
+    @Override
+    protected void initData() {
 
         fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new HomePageFragment());
@@ -50,11 +52,6 @@ public class EatFragment extends BaseFragment {
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
-    }
-
-    @Override
-    protected void initData() {
 
     }
 }

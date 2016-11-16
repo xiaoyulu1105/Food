@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.KnowledgeBean;
+import com.example.dllo.food.beans.eat.KnowledgeBean;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ import java.util.ArrayList;
  *
  * 用于显示 逛吃 中的 知识 的数据, 也适用于 美食选项 数据的显示
  * 共有两种布局
- * type = 1: 只有一张图片的格
- * type = 3: 共有三张图片的格式
+ * type = 0: 只有一张图片的格
+ * type = 1: 共有三张图片的格式
  *
  */
 public class MyKnowLedgeLvAdapter extends BaseAdapter{
@@ -73,7 +73,6 @@ public class MyKnowLedgeLvAdapter extends BaseAdapter{
         ArrayList<String> images = (ArrayList<String>) feedsBeanArrayList.get(position).getImages();
 
         int type = getItemViewType(position);
-        Log.d("MyKnowLedgeLvAdapter", "type:" + type);
         CommonVH commonVH;
 
         switch (type) {

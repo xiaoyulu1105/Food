@@ -58,7 +58,6 @@ public class CollectionArticleFragment extends BaseFragment {
     protected void initData() {
 
         bmobUser = BmobUser.getCurrentUser(BmobUser.class);
-        getUsername = bmobUser.getUsername();
 
         judgeIfLoginMethod();
 
@@ -114,8 +113,11 @@ public class CollectionArticleFragment extends BaseFragment {
             Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
             Intent intent1 = new Intent(mContext, LoginActivity.class);
             startActivity(intent1);
+            getActivity().finish();
 
         } else {
+
+            getUsername = bmobUser.getUsername();
             showCollectionArticle(getUsername);
         }
     }

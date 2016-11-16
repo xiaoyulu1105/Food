@@ -7,7 +7,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
@@ -23,6 +22,7 @@ public class HomePageMoreFirstActivity extends BaseActivity implements View.OnCl
     private ImageView returnIV;
     private WebView webView;
     private String getLink; // 上级界面传递过来的 link
+    public static final String INTENT_LINK = "link";
 
     @Override
     protected int getLayout() {
@@ -42,7 +42,7 @@ public class HomePageMoreFirstActivity extends BaseActivity implements View.OnCl
 
         Intent intent = getIntent();
         // getLink 获取为空
-        getLink = intent.getStringExtra("link");
+        getLink = intent.getStringExtra(INTENT_LINK);
         getLink = UrlValues.EAT_HOMEPAGE_FIRST_LINK;
 
         webView.setWebChromeClient(new WebChromeClient());

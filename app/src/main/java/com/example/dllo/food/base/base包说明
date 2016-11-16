@@ -5,3 +5,4 @@
 CommonVH 是Adapter中的 ViewHolder,
 可以适用于ListView 的Adapter, 也适用于 RecyclerView 的 Adapter
 
+Bmob 的初始化在 Application 中实现

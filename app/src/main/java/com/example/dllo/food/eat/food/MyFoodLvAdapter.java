@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.beans.DeliciousFoodBean;
+import com.example.dllo.food.beans.eat.DeliciousFoodBean;
 
 import java.util.ArrayList;
 
@@ -45,8 +45,8 @@ public class MyFoodLvAdapter extends BaseAdapter{
     @Override
     public int getItemViewType(int position) {
         // 共有两种布局
-        // type = 1: 只有一张图片的格式
-        // type = 3: 共有三张图片的格式
+        // type = 0: 只有一张图片的格式
+        // type = 1: 共有三张图片的格式
         int imgCount = feedsBeanArrayList.get(position).getImages().size();
         if (imgCount == 1) {
             return 0;

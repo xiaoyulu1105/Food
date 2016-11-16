@@ -35,13 +35,12 @@ public class CircleDrawable extends Drawable {
 
         // 设置半径的大小
         radius = Math.min(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
-
     }
 
     @Override
     public void draw(Canvas canvas) {
         // 画圆
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, radius, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getWidth() / 2, radius, paint);
     }
 
     @Override

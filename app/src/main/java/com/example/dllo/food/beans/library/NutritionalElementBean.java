@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * Created by XiaoyuLu on 16/11/5.
  *
- * 食物百科中, 点击GridView 中的 任意 一项, 跳转后进行显示的 营养素排序
+ *  营养素排序 的数据类
+ *  在 食物百科中 有两个地方用到
  */
 public class NutritionalElementBean {
 

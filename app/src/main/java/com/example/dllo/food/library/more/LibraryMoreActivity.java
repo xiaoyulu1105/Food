@@ -67,8 +67,8 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
     private ArrayList<Integer> subIdArrayList;   // 传递来的 内部类的 id
 
     private int subValue;  // 从 上一个界面传递过来的 sub_value(subId) 的值(从1开始的, 13(包装谷薯))
-    private String orderIndex = "1";  // 网络请求 获得的order_by 的 值(全部: 1, 热量: 2)
-    private int orderAsc = 0;  // 由低到高为1, 高到低为0. 默认为高到低
+    private String orderIndex;  // 网络请求 获得的order_by 的 值(默认全部: 1, 热量: 2)
+    private int orderAsc;  // 由低到高为1, 高到低为0. 默认为高到低
 
     private String part1Kind = UrlValues.FOOD_MORE_PART1_KIND;
     private String part2Value = UrlValues.FOOD_MORE_PART2_VALUE;
@@ -108,6 +108,9 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
 
         setClick(this, returnLl, allBtn, nutritionalTV, nutritionalImgBtn, orderBtn);
         setClick(this, returnImgBtn);
+
+        orderIndex = "1";
+        orderAsc = 0;
     }
 
     @Override
@@ -116,12 +119,12 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
         Intent intent = getIntent();
 
         getKind = intent.getStringExtra("kind");
-        getName = intent.getStringExtra("name");
         getId = intent.getIntExtra("id", 0);
         subNameArrayList = intent.getStringArrayListExtra("subNameArrayList");
         subNameArrayList.add(0, "全部");
         subIdArrayList = intent.getIntegerArrayListExtra("subIdArrayList");
 
+        getName = intent.getStringExtra("name");
         title.setText(getName);
 
         // 显示第一次跳转的数据
@@ -345,22 +348,8 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onResponse(NutritionalElementBean response) {
 
-                        final ArrayList<NutritionalElementBean.TypesBean> beanArrayList =
-                                (ArrayList<NutritionalElementBean.TypesBean>) response.getTypes();
+                        showDataByRecyclerView(response);
 
-                        GridLayoutManager manager = new GridLayoutManager(LibraryMoreActivity.this, 3);
-                        popRecycler.setLayoutManager(manager);
-
-                        MyPopRvAdapter adapter = new MyPopRvAdapter();
-                        adapter.setBeanArrayList(beanArrayList);
-                        popRecycler.setAdapter(adapter);
-
-                        // 接口回调实现 RecyclerView 中的 Item 的点击监听
-                        popRecyclerItemClickMethod(adapter, beanArrayList);
-
-                        // 添加分割线
-                        popRecycler.addItemDecoration(new DividerItemDecoration(
-                                LibraryMoreActivity.this, LinearLayoutManager.VERTICAL));
 
                     }
                 }, new Response.ErrorListener() {
@@ -371,6 +360,26 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
         }
         );
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    /** 显示请求的营养素的数据 */
+    private void showDataByRecyclerView(NutritionalElementBean response) {
+        final ArrayList<NutritionalElementBean.TypesBean> beanArrayList =
+                (ArrayList<NutritionalElementBean.TypesBean>) response.getTypes();
+
+        GridLayoutManager manager = new GridLayoutManager(LibraryMoreActivity.this, 3);
+        popRecycler.setLayoutManager(manager);
+
+        MyPopRvAdapter adapter = new MyPopRvAdapter();
+        adapter.setBeanArrayList(beanArrayList);
+        popRecycler.setAdapter(adapter);
+
+        // 接口回调实现 RecyclerView 中的 Item 的点击监听
+        popRecyclerItemClickMethod(adapter, beanArrayList);
+
+        // 添加分割线
+        popRecycler.addItemDecoration(new DividerItemDecoration(
+                LibraryMoreActivity.this, LinearLayoutManager.VERTICAL));
     }
 
 

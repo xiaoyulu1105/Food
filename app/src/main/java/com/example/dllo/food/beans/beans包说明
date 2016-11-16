@@ -1,2 +1,16 @@
 
 beans包 用于存放所有的 数据类
+
+食物百科中的数据类
+1. EveryoneSearchBean: 食物百科-搜索-大家都在搜的 数据类
+2. FoodMoreBean: 食物详情的 数据类, 所有的食物详情 都可通用 该数据类
+3. LibraryBean: 食物百科 的 数据类
+4. LibrarySearchBean: 搜索后所得的 数据类
+5. NutritionalElementBean: 营养素排序 的数据类
+
+逛吃中的数据类
+1. HomepageBean:  逛吃选项中 首页选型 的数据类
+2. EvaluateBean:  逛吃选项的 第二项: 测评 的 数据类
+3. KnowledgeBean: 逛吃选项的 第三项: 知识选项 的数据类
+4. DeliciousFoodBean: 逛吃选型 的 第四项: 美食选型的 数据类
+

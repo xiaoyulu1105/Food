@@ -10,7 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
-import com.example.dllo.food.beans.DeliciousFoodBean;
+import com.example.dllo.food.beans.eat.DeliciousFoodBean;
 import com.example.dllo.food.eat.evaluate.EvaluateMoreActivity;
 import com.example.dllo.food.values.UrlValues;
 import com.example.dllo.food.volley.GsonRequest;
@@ -52,25 +52,8 @@ public class FoodFragment extends BaseFragment {
                     @Override
                     public void onResponse(final DeliciousFoodBean response) {
 
-                        ArrayList<DeliciousFoodBean.FeedsBean> feedsBeanArrayList =
-                                (ArrayList<DeliciousFoodBean.FeedsBean>) response.getFeeds();
+                        showDataByListView(response);
 
-                        MyFoodLvAdapter adapter = new MyFoodLvAdapter();
-                        adapter.setFeedsBeanArrayList(feedsBeanArrayList);
-                        listView.setAdapter(adapter);
-
-                        //  将请求的数据 中的link 传送到下一个Activity 实现网页的显示
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String link = response.getFeeds().get(position).getLink();
-                                String title = response.getFeeds().get(position).getTitle();
-                                Intent intent = new Intent(getActivity(), EvaluateMoreActivity.class);
-                                intent.putExtra("link", link);
-                                intent.putExtra("title", title);
-                                startActivity(intent);
-                            }
-                        });
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -79,5 +62,28 @@ public class FoodFragment extends BaseFragment {
             }
         });
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    /** 将请求得到是数据进行显示 */
+    private void showDataByListView(final DeliciousFoodBean response) {
+        ArrayList<DeliciousFoodBean.FeedsBean> feedsBeanArrayList =
+                (ArrayList<DeliciousFoodBean.FeedsBean>) response.getFeeds();
+
+        MyFoodLvAdapter adapter = new MyFoodLvAdapter();
+        adapter.setFeedsBeanArrayList(feedsBeanArrayList);
+        listView.setAdapter(adapter);
+
+        //  将请求的数据 中的link 传送到下一个Activity 实现网页的显示, title 用于在收藏中显示标题
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String link = response.getFeeds().get(position).getLink();
+                String title = response.getFeeds().get(position).getTitle();
+                Intent intent = new Intent(getActivity(), EvaluateMoreActivity.class);
+                intent.putExtra(EvaluateMoreActivity.INTENT_ARTICLE_LINK, link);
+                intent.putExtra(EvaluateMoreActivity.INTENT_ARTICLE_TITLE, title);
+                startActivity(intent);
+            }
+        });
     }
 }

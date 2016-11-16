@@ -5,10 +5,9 @@ import java.util.List;
 /**
  * Created by XiaoyuLu on 16/11/10.
  *
- * 在搜索的 Activity 输入东西, 点击搜索后所得的数据类接口
+ * SearchActivity 中输入东西后, 搜索后所得的 数据类
  */
 public class LibrarySearchBean {
-
 
     /**
      * page : 1

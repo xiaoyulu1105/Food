@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * Created by XiaoyuLu on 16/11/1.
  *
- * 食物百科的数据类
+ * 食物百科 的 数据类
+ * 显示在 3个 GridView 中的数据 的数据类
  */
 public class LibraryBean {
 

@@ -1,4 +1,4 @@
-package com.example.dllo.food.beans;
+package com.example.dllo.food.beans.eat;
 
 import java.util.List;
 

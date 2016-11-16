@@ -9,8 +9,8 @@
     <!-- 食物百科中进入详情界面 后的数据 -->
     <ImageView
         android:id="@+id/item_food_more_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@mipmap/ic_launcher"
         android:layout_marginRight="15dp"
         />
