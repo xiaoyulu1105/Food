@@ -11,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/activity_label_height"
             android:drawableLeft="@mipmap/ic_back_dark_center"
-            android:text="返回注册"
+            android:text="返回"
             android:textSize="@dimen/activity_label_text_size"
             android:background="@null"
             android:layout_marginLeft="10dp"
@@ -101,9 +101,10 @@
         android:id="@+id/mine_register_save"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="90dp"
         android:text="保存注册"
         android:layout_marginTop="50dp"
+        android:background="#84dc84"
         />
 
 </LinearLayout>

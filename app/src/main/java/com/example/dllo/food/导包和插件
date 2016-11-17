@@ -26,6 +26,7 @@ Lite 学习网址:  http://litesuits.com/index.html
 
 8. EventBus 实现传值, 需导包: compile 'org.greenrobot:eventbus:3.0.0'
 
+9. Bmob云数据 登录Bmob 跟着文档就可实现
 
 
 

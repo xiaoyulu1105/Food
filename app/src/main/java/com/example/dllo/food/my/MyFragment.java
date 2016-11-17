@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 import com.example.dllo.food.my.collection.CollectionActivity;
+import com.example.dllo.food.my.login.LoginActivity;
 import com.example.dllo.food.tools.CircleDrawable;
 
 import cn.bmob.v3.BmobUser;
@@ -32,7 +32,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     // 登录状态显示的 控件
     private LinearLayout loginAlreadyLl;
     private TextView usernameTV;
-    private Button modifyBtn;
     private String getUsername;
 
     private LinearLayout collectionLl;
@@ -52,7 +51,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
         loginAlreadyLl = (LinearLayout) getView().findViewById(R.id.my_login_already_ll);
         usernameTV = bindView(R.id.my_login_already_username);
-        modifyBtn = bindView(R.id.my_login_already_modify);
 
 
         collectionLl = (LinearLayout) getActivity().findViewById(R.id.my_collection_ll);
@@ -61,7 +59,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
         CircleDrawable drawable = new CircleDrawable(bitmap);
         iconIV.setImageDrawable(drawable);
 
-        setClick(this, settingIV, loginBtn, modifyBtn, collectionLl);
+        setClick(this, settingIV, loginBtn, collectionLl);
 
     }
 
@@ -87,7 +85,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.my_collection_ll:
                 // 界面跳转, 如果登录了就跳到收藏页, 需要带值跳转, 将账号和收藏的东西对应上
-                // TODO 未登录时则跳到登录界面
                 Intent intent3 = new Intent(mContext, CollectionActivity.class);
                 startActivity(intent3);
 
@@ -111,9 +108,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
             getUsername = bmobUser.getUsername();
             usernameTV.setText(getUsername);
 
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.my_login_icon);
+            CircleDrawable drawable = new CircleDrawable(bitmap);
+            iconIV.setImageDrawable(drawable);
+
         } else {
             loginAlreadyLl.setVisibility(View.INVISIBLE);
             loginBtn.setVisibility(View.VISIBLE);
+
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_analyse_default);
+            CircleDrawable drawable = new CircleDrawable(bitmap);
+            iconIV.setImageDrawable(drawable);
         }
 
 

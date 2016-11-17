@@ -14,12 +14,13 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/library_search_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
+            android:layout_marginLeft="10dp"
             android:src="@mipmap/ic_back_dark_center" />
 
         <EditText

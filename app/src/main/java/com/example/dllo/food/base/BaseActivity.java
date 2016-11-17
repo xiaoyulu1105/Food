@@ -44,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         for (View view : views) {
             view.setOnClickListener(onClickListener);
         }
+
     }
 
 }

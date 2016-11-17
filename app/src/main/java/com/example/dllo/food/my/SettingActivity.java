@@ -3,10 +3,9 @@ package com.example.dllo.food.my;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +21,7 @@ import cn.bmob.v3.BmobUser;
  */
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageButton returnImgBtn;
+    private ImageView returnIV;
     private ListView listView;
     private Button cancelBtn;  // 当处于登录 状态时, 显示该 退出按钮
 
@@ -33,11 +32,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initViews() {
-        returnImgBtn = bindView(R.id.my_set_return);
+        returnIV = bindView(R.id.my_set_return);
         listView = bindView(R.id.my_set_list);
         cancelBtn = bindView(R.id.my_set_cancel_login);
 
-        setClick(this, returnImgBtn, cancelBtn);
+        setClick(this, returnIV, cancelBtn);
 
     }
 

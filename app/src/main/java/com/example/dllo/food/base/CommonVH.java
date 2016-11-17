@@ -1,12 +1,7 @@
 package com.example.dllo.food.base;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.dllo.food.tools.CircleDrawable;
-import com.example.dllo.food.values.WhatValues;
 import com.example.dllo.food.volley.VolleySingleton;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by Xiaoyulu on 16/10/31.

@@ -9,6 +9,7 @@ import java.net.URLEncoder;
  * 实现将字符串转换成utf_8格式
  */
 public class UTF8Util {
+
     public static String stringToUTF8(String str) {
         String result = null;
         try {

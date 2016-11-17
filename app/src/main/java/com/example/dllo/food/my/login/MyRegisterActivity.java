@@ -1,4 +1,4 @@
-package com.example.dllo.food.my;
+package com.example.dllo.food.my.login;
 
 import android.util.Log;
 import android.view.View;
@@ -51,9 +51,6 @@ public class MyRegisterActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initData() {
-//        getUsername = usernameEdt.getText().toString();
-//        getPassword = passwordEdt.getText().toString();
-//        getPasswordSec = passwordSecEdt.getText().toString();
 
     }
 
@@ -108,7 +105,9 @@ public class MyRegisterActivity extends BaseActivity implements View.OnClickList
             @Override
             public void done(BmobUser bmobUser, BmobException e) {
                 if (e == null) {
-                    Toast.makeText(MyRegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyRegisterActivity.this, "注册成功, 请登录!", Toast.LENGTH_SHORT).show();
+                    finish();
+
                 } else {
                     Toast.makeText(MyRegisterActivity.this, "注册失败!", Toast.LENGTH_SHORT).show();
                     Log.d("MyRegisterActivity", "注册失败!");

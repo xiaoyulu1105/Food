@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -19,8 +18,8 @@ import com.example.dllo.food.beans.event.SearchTypeEvent;
 import com.example.dllo.food.beans.event.TextEvent;
 import com.example.dllo.food.beans.library.EveryoneSearchBean;
 import com.example.dllo.food.library.LibraryFragment;
-import com.example.dllo.food.sqltools.DBTool;
-import com.example.dllo.food.sqltools.HistorySqlData;
+import com.example.dllo.food.dbtools.DBTool;
+import com.example.dllo.food.dbtools.HistorySqlData;
 import com.example.dllo.food.tools.DividerItemDecoration;
 import com.example.dllo.food.tools.OnRecyclerViewItemClickListener;
 import com.example.dllo.food.values.UrlValues;
@@ -176,20 +175,9 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
                 new Response.Listener<EveryoneSearchBean>() {
                     @Override
                     public void onResponse(EveryoneSearchBean response) {
-                        ArrayList<String> stringArrayList = (ArrayList<String>) response.getKeywords();
 
-                        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-                        recyclerView.setLayoutManager(manager);
+                        showDataByRecyclerView(response);
 
-                        MyEveryoneSearchRVAdapter adapter = new MyEveryoneSearchRVAdapter();
-                        adapter.setStringArrayList(stringArrayList);
-                        recyclerView.setAdapter(adapter);
-
-                        // 设置分隔线
-                        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
-                                LinearLayoutManager.VERTICAL));
-                        // 大家都在搜 Item 的点击实现
-                        recyclerViewItemClickMethod(adapter, stringArrayList);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -198,6 +186,24 @@ public class SearchSearchFragment extends BaseFragment implements View.OnClickLi
             }
         });
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    /** 显示大家都在搜的数据 */
+    private void showDataByRecyclerView(EveryoneSearchBean response) {
+        ArrayList<String> stringArrayList = (ArrayList<String>) response.getKeywords();
+
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(manager);
+
+        MyEveryoneSearchRVAdapter adapter = new MyEveryoneSearchRVAdapter();
+        adapter.setStringArrayList(stringArrayList);
+        recyclerView.setAdapter(adapter);
+
+        // 设置分隔线
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext,
+                LinearLayoutManager.VERTICAL));
+        // 大家都在搜 Item 的点击实现
+        recyclerViewItemClickMethod(adapter, stringArrayList);
     }
 
     /**

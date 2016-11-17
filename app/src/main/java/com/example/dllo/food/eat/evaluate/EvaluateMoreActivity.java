@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
-import com.example.dllo.food.my.LoginActivity;
-import com.example.dllo.food.sqltools.CollectionSqlData;
-import com.example.dllo.food.sqltools.DBTool;
+import com.example.dllo.food.my.login.LoginActivity;
+import com.example.dllo.food.dbtools.CollectionSqlData;
+import com.example.dllo.food.dbtools.DBTool;
 
 import java.util.ArrayList;
 
@@ -31,11 +31,10 @@ import cn.bmob.v3.BmobUser;
  */
 public class EvaluateMoreActivity extends BaseActivity implements View.OnClickListener{
 
-    private ImageButton returnImgBtn;
+    private ImageView returnIV;
     private WebView webView;
     private Button shareBtn;
 
-    private LinearLayout collectionLl;
     private ImageView collectionIV;
     private Button collectBtn;
 
@@ -59,16 +58,14 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initViews() {
-        returnImgBtn = bindView(R.id.eat_evaluate_more_return);
+        returnIV = bindView(R.id.eat_evaluate_more_return);
         webView = bindView(R.id.eat_evaluate_more_web);
         shareBtn = bindView(R.id.eat_evaluate_more_share);
 
-        collectionLl = (LinearLayout)findViewById(R.id.eat_evaluate_more_collection_ll);
         collectionIV = bindView(R.id.eat_evaluate_more_collection_iv);
         collectBtn = bindView(R.id.eat_evaluate_more_collection_btn);
 
-        setClick(this, returnImgBtn, shareBtn, collectionIV, collectBtn);
-        collectionLl.setOnClickListener(this);
+        setClick(this, returnIV, shareBtn, collectionIV, collectBtn);
 
         dbTool = new DBTool();
     }
@@ -82,7 +79,6 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
         bmobUser = BmobUser.getCurrentUser(BmobUser.class);
 
         judgeIfLoginMethod();
-
         webViewMethod(getLink);
     }
 
@@ -115,7 +111,6 @@ public class EvaluateMoreActivity extends BaseActivity implements View.OnClickLi
                 Toast.makeText(this, "分享实现中...", Toast.LENGTH_SHORT).show();
 
                 break;
-            case R.id.eat_evaluate_more_collection_ll:
             case R.id.eat_evaluate_more_collection_iv:
             case R.id.eat_evaluate_more_collection_btn:
                 judgeIfLoginWhenClick();

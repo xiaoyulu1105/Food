@@ -47,7 +47,7 @@ public class EatFragment extends BaseFragment {
         fragmentArrayList.add(new KnowledgeFragment());
         fragmentArrayList.add(new FoodFragment());
 
-        MyEatVpAdapter adapter = new MyEatVpAdapter(getFragmentManager());
+        MyEatVpAdapter adapter = new MyEatVpAdapter(getChildFragmentManager());
         adapter.setFragmentArrayList(fragmentArrayList);
         viewPager.setAdapter(adapter);
 

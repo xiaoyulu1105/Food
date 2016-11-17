@@ -3,19 +3,21 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+
     <!--食物百科, 点击查询Button后, 跳转的Activity-->
     <!--每一行的高度-->
     <!--文字的大小-->
+    <!--首页-更多中 Title 的大小-->
     <dimen name="activity_search_item_height">50dp</dimen>
     <dimen name="activity_search_text_size">18sp</dimen>
 
-    <!--首页中Title的大小-->
-    <dimen name="activity_homepage_text_size">18sp</dimen>
+    <!--<dimen name="activity_homepage_text_size">18sp</dimen>-->
 
     <!--登录 title 的 高度 和 文字大小-->
     <dimen name="activity_label_height">55dp</dimen>
     <dimen name="activity_label_text_size">20sp</dimen>
 
+    <!--搜索历史 和 大家都在搜文字的高度 -->
     <!--食物百科, item, 营养素排行的高度-->
     <dimen name="item_height_nutritional_element">45dp</dimen>
 

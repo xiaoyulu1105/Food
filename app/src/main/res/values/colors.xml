@@ -7,10 +7,10 @@
     <!--黑色和白色-->
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
-
+    <!--近灰色-->
     <color name="colorBlack1">#1e1e1e</color>
 
-    <!--Radio选中与为选中的颜色-->
+    <!--Radio选中与未选中的颜色-->
     <color name="colorIsChecked">#e25557</color>
     <color name="colorNotChecked">#9e9595</color>
 
@@ -19,7 +19,6 @@
 
     <!--食物百科中 接近白色的 背景颜色-->
     <color name="colorBackgroundLibrary">#f1f7f1</color>
-
 
 
 

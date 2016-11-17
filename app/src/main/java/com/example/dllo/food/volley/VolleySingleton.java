@@ -1,11 +1,8 @@
 package com.example.dllo.food.volley;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -16,13 +13,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.MyApp;
 import com.example.dllo.food.tools.CircleDrawable;
-import com.example.dllo.food.values.WhatValues;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by XiaoyuLu on 16/10/27.
@@ -41,6 +31,7 @@ public class VolleySingleton {
 
     private RequestQueue requestQueue;
     private ImageLoader imageLoader; // 用来请求图片的 ImageLoader类
+    private static Object object = new Object();
 
     private VolleySingleton() {
         requestQueue = Volley.newRequestQueue(MyApp.getContext());
@@ -48,8 +39,9 @@ public class VolleySingleton {
     }
 
     public static VolleySingleton getInstance() {
-        if (volleySingleton == null) {
-            synchronized (VolleySingleton.class) { // 同步锁
+        if (volleySingleton == null) {  // 目的: 提高效率, 让多余的线程排队等候
+//            synchronized (VolleySingleton.class) { // 同步锁, 参数是 本类, this(本类对象, 每一次会)不可以
+                synchronized (object) {   // 锁可以一个固定的任何类的 对象(需要初始化), this不可以
                 if (volleySingleton == null) {
                     volleySingleton = new VolleySingleton();
                 }
@@ -59,18 +51,13 @@ public class VolleySingleton {
         return volleySingleton;
     }
 
-    /** 获得RequestQueue */
-    public RequestQueue getRequestQueue(){
-        return requestQueue;
-    }
-
     /** 向请求队列 添加 请求 */
     public <T> void addRequest(Request<T> request){
         requestQueue.add(request);
     }
 
 
-    /** 请求图片 方法1,  // 不带 动画效果的请求图片 */
+    /** 请求图片 显示在 ImageView 中 */
     public void getImage(String url, final ImageView imageView) {
         imageLoader.get(url, new ImageLoader.ImageListener() {
             @Override
@@ -88,18 +75,10 @@ public class VolleySingleton {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("VolleySingleton", "图片请求失败");
+                Log.d("VolleySingleton", error.getMessage());
             }
         });
-    }
-
-
-
-
-    /** 请求图片 方法2 带有动画效果 */
-    public void getAnimImage(String url, ImageView imageView) {
-        // 带渐变动画效果的请求图片
-        imageLoader.get(url, new AnimImageListener(imageView));
     }
 
     /** 请求图片 实现图片的圆形显示 */
@@ -115,7 +94,6 @@ public class VolleySingleton {
                     imageView.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     // 图片请求成功
-                    // TODO
                     CircleDrawable drawable = new CircleDrawable(bitmap);
                     imageView.setImageDrawable(drawable);
                 }
@@ -123,11 +101,26 @@ public class VolleySingleton {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("VolleySingleton", "图片请求失败");
+                Log.d("VolleySingleton", error.getMessage());
             }
         });
 
     }
+
+
+    /** 请求图片 方法2 带有动画效果 */
+    public void getAnimImage(String url, ImageView imageView) {
+        // 带渐变动画效果的请求图片
+        imageLoader.get(url, new AnimImageListener(imageView));
+    }
+
+
+
+//    // 取消请求
+//    public void  fun() {
+//        requestQueue.cancelAll(tag);
+//    }
 
 
 }

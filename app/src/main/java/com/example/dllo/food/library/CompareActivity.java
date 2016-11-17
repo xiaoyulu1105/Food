@@ -23,11 +23,11 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initViews() {
-        ImageButton returnImgBtn = bindView(R.id.library_compare_return);
+        ImageView returnIV = bindView(R.id.library_compare_return);
         ImageView firstIv = bindView(R.id.library_compare_first_img);
         ImageView secondIv = bindView(R.id.library_compare_second_img);
 
-        setClick(this, returnImgBtn);
+        setClick(this, returnIV);
         setClick(this, firstIv, secondIv);
 
     }

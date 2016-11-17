@@ -1,4 +1,4 @@
-package com.example.dllo.food.sqltools;
+package com.example.dllo.food.dbtools;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -23,10 +23,10 @@ public class SingletonUtils {
     private Handler handler;
 
     private SingletonUtils(String DBName) {
-        int corePoolSize = Runtime.getRuntime().availableProcessors() + 1;
-        int maxPoolSize = corePoolSize * 2 + 1;
+        int corePoolSize = Runtime.getRuntime().availableProcessors() + 1; // cpu核数 + 1
+        int maxPoolSize = corePoolSize * 2 + 1; // 核心线程数*2 + 1
         threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 60l,
-                TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+                TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>()); // 任务队列无界
 
         liteOrm = LiteOrm.newSingleInstance(MyApp.getContext(), DBName);
         // Handler 只能在 主线程里 new

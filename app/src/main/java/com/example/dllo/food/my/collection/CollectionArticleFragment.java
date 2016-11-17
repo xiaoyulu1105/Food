@@ -13,9 +13,9 @@ import android.widget.Toast;
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseFragment;
 import com.example.dllo.food.eat.evaluate.EvaluateMoreActivity;
-import com.example.dllo.food.my.LoginActivity;
-import com.example.dllo.food.sqltools.CollectionSqlData;
-import com.example.dllo.food.sqltools.DBTool;
+import com.example.dllo.food.my.login.LoginActivity;
+import com.example.dllo.food.dbtools.CollectionSqlData;
+import com.example.dllo.food.dbtools.DBTool;
 
 import java.util.ArrayList;
 

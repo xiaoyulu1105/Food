@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * Created by XiaoyuLu on 16/11/12.
  *
  * 用于铺建历史记录里的数据
+ * 因为 Item 的布局不一样, 所以搜索历史 和 大家都在搜必须用两个不同的 Adapter 铺建
  */
 public class MyHistoryRVAdapter extends RecyclerView.Adapter{
     private ArrayList<String> stringArrayList;

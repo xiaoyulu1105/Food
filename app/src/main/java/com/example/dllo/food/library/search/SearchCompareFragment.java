@@ -1,5 +1,6 @@
 package com.example.dllo.food.library.search;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.dllo.food.R;
@@ -24,6 +25,7 @@ public class SearchCompareFragment extends BaseFragment {
 
         getTextStr = ((SearchActivity)getActivity()).getTextStr();
         Toast.makeText(mContext, getTextStr, Toast.LENGTH_SHORT).show();
+        Log.d("SearchCompareFragment", getTextStr);
 
     }
 

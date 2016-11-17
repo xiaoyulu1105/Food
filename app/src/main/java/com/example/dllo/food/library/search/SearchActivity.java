@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,14 +15,11 @@ import com.example.dllo.food.R;
 import com.example.dllo.food.base.BaseActivity;
 import com.example.dllo.food.beans.event.TextEvent;
 import com.example.dllo.food.library.LibraryFragment;
-import com.example.dllo.food.sqltools.DBTool;
-import com.example.dllo.food.sqltools.HistorySqlData;
+import com.example.dllo.food.dbtools.DBTool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
 
 /**
  * Created by XiaoyuLu on 16/11/1.
@@ -36,7 +32,7 @@ import java.util.ArrayList;
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener{
 
-    private ImageButton imgBtnReturn;
+    private ImageView returnIV;
     private EditText textEdt;
     private ImageView deleteIV;
     private ImageView searchIV;
@@ -57,12 +53,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initViews() {
-        imgBtnReturn = bindView(R.id.library_search_return);
+        returnIV = bindView(R.id.library_search_return);
         textEdt = bindView(R.id.library_search_edt);
         deleteIV = bindView(R.id.library_search_delete);
         searchIV = bindView(R.id.library_search_search);
 
-        setClick(this, imgBtnReturn, deleteIV, searchIV);
+        setClick(this, returnIV, deleteIV, searchIV);
 
         dbTool = new DBTool();
         manager = getSupportFragmentManager();
@@ -150,6 +146,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
+    /** 判断输入框是否为空 */
+    private void judgeIfTextNull(EditText textEdt) {
+        if (textEdt.getText().length() <= 0) {
+            deleteIV.setVisibility(View.INVISIBLE);
+            transactToSearchFragment();
+
+        } else {
+            deleteIV.setVisibility(View.VISIBLE);
+            transactToSearchFragment();
+        }
+    }
+
     /** 点击搜索  保存和跳转 事件 */
     private void clickSearchSaveAndTransact(String textStr) {
 
@@ -169,17 +177,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    /** 判断输入框是否为空 */
-    private void judgeIfTextNull(EditText textEdt) {
-        if (textEdt.getText().length() <= 0) {
-            deleteIV.setVisibility(View.INVISIBLE);
-            transactToSearchFragment();
-
-        } else {
-            deleteIV.setVisibility(View.VISIBLE);
-            transactToSearchFragment();
-        }
-    }
 
     /** fragment 转换为 搜索的 Fragment */
     private void transactToSearchFragment() {
@@ -190,7 +187,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    /** 为 输入框的字符串, 设置GetSet方法 */
+    /** textStr 存放 输入框的字符串, 为其设置Get Set方法 */
+    // 作用, 在 显示的 Fragment 中可以通过get方法获取到 搜索的字符,
+    // 再将其变换为UTF-8格式, 实现网络请求
     public String getTextStr() {
         return textStr;
     }

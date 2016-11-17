@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 
 import com.example.dllo.food.R;
 import com.example.dllo.food.base.CommonVH;
-import com.example.dllo.food.sqltools.CollectionSqlData;
+import com.example.dllo.food.dbtools.CollectionSqlData;
 
 import java.util.ArrayList;
 

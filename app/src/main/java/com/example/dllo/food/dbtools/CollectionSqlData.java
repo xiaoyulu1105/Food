@@ -1,11 +1,11 @@
-package com.example.dllo.food.sqltools;
+package com.example.dllo.food.dbtools;
 
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.enums.AssignType;
 
 /**
  * Created by XiaoyuLu on 16/11/14.
- *
+ * <p/>
  * 收藏 的数据类
  */
 public class CollectionSqlData {

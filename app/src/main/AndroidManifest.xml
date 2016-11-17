@@ -30,18 +30,19 @@
         android:theme="@style/MyAppTheme">
 
         <!--启动 和 主页 -->
-        <activity android:name=".StartActivity">
-
-        </activity>
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".StartActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".banner.TestActivity" />
+
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask">
+
+        </activity>
 
         <!--食物百科 相关-->
         <activity android:name=".library.search.SearchActivity"
@@ -64,11 +65,9 @@
 
         <!--我的中 设置 和 登录-->
         <activity android:name=".my.SettingActivity" />
-        <activity android:name=".my.LoginActivity" />
+        <activity android:name=".my.login.LoginActivity" />
         <activity android:name=".my.collection.CollectionActivity"/>
-        <activity android:name=".my.MyLoginActivity"/>
-        <activity android:name=".my.MyRegisterActivity"/>
-        <activity android:name=".my.MyOtherActivity"/>
+        <activity android:name=".my.login.MyRegisterActivity"/>
 
 
     </application>

@@ -1,4 +1,4 @@
-package com.example.dllo.food.my;
+package com.example.dllo.food.my.login;
 
 import android.content.Intent;
 import android.util.Log;
@@ -143,8 +143,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                 } else {
                     Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_SHORT).show();
-                    Log.d("MyLoginActivity", "登录失败!");
-                    Log.d("MyLoginActivity", e.getMessage());
+                    Log.d("LoginActivity", "登录失败!");
+                    Log.d("LoginActivity", e.getMessage());
                 }
             }
         });

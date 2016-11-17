@@ -66,9 +66,9 @@
                 android:layout_margin="10dp"
                 >
                 <ImageView
+                    android:id="@+id/eat_homepage_more_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/eat_homepage_more_icon"
                     android:src="@mipmap/ic_launcher"
                     android:layout_marginRight="10dp"
                     />
@@ -77,9 +77,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="发布者"
-                    android:textSize="@dimen/activity_homepage_text_size"
+                    android:textSize="@dimen/activity_search_text_size"
                     />
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/eat_homepage_more_image"
                 android:layout_width="match_parent"

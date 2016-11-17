@@ -25,7 +25,7 @@ public class CircleDrawable extends Drawable {
 
         // 初始化画笔
         paint = new Paint();
-        paint.setAntiAlias(true);
+        paint.setAntiAlias(true); // 设置抗锯齿
 
         // 设置画笔的花纹
         BitmapShader shader = new BitmapShader(bitmap,

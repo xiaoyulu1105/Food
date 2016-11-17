@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,12 +41,12 @@ import java.util.ArrayList;
 public class LibraryMoreActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout returnLl; // 返回
-    private ImageButton returnImgBtn; // 返回的小图标
+    private ImageView returnIV; // 返回的小图标
     private TextView title;
     private Button allBtn;         // 全部
 
     private TextView nutritionalTV; // 营养素排序
-    private ImageButton nutritionalImgBtn;  // 营养素排序小图标
+    private ImageView nutritionalIV;  // 营养素排序小图标
     private Button orderBtn; // 营养素排序方式
     private ImageView orderIV;  //
     private ListView listView;    // 显示数据
@@ -94,20 +93,20 @@ public class LibraryMoreActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initViews() {
         returnLl = (LinearLayout) findViewById(R.id.library_more_return_ll);
-        returnImgBtn = (ImageButton) findViewById(R.id.library_more_return);
+        returnIV = (ImageView) findViewById(R.id.library_more_return);
 
         title = bindView(R.id.library_more_title);
         allBtn = bindView(R.id.library_more_all);
 
         nutritionalTV = bindView(R.id.library_more_nutritional_element_tv);
-        nutritionalImgBtn = bindView(R.id.library_more_nutritional_element_ib);
+        nutritionalIV = bindView(R.id.library_more_nutritional_element_ib);
         orderBtn = bindView(R.id.library_more_nutritional_element_order_btn);
         orderIV = bindView(R.id.library_more_nutritional_element_order_iv);
 
         listView = bindView(R.id.library_more_list);
 
-        setClick(this, returnLl, allBtn, nutritionalTV, nutritionalImgBtn, orderBtn);
-        setClick(this, returnImgBtn);
+        setClick(this, returnLl, allBtn, nutritionalTV, nutritionalIV, orderBtn);
+        setClick(this, returnIV);
 
         orderIndex = "1";
         orderAsc = 0;

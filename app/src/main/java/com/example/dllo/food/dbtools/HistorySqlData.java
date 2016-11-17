@@ -1,4 +1,4 @@
-package com.example.dllo.food.sqltools;
+package com.example.dllo.food.dbtools;
 
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.enums.AssignType;
